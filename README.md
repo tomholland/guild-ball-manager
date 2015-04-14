@@ -1,1 +1,0 @@
-# guildball-manager
