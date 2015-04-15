@@ -6,3 +6,5 @@ function generate_unique_string() {
 }
 
 echo generate_unique_string()."\n";
+
+?>
