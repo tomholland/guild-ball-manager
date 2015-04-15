@@ -1,0 +1,8 @@
+{{team}}
+
+{{#players}}
+* {{name}}{{#captain.length}} (captain){{/captain.length}}{{#mascot.length}} (mascot){{/mascot.length}}
+{{/players}}
+
+Created with Guild Ball Manager for iOS:
+http://itunes.apple.com/app/
