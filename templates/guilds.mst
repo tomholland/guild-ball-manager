@@ -1,0 +1,15 @@
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#guilds}}
+			<li>
+				<a class="listing-block" data-guild-id="{{id}}">
+					<span class="cell image"><img src="images/guilds/{{image}}"></span>
+					<span class="cell name">{{name}}</span>
+					<span class="cell icon"><span class="icon icon-right"></span></span>
+				</a>
+			</li>
+			{{/guilds}}
+		</ul>
+	</div>
+</div>

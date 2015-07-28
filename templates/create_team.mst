@@ -1,0 +1,10 @@
+<div class="content-view content-padded" id="team" data-back-content-view-id="teams">
+	<div class="content-view-scroll-wrapper">
+		<form onsubmit="return false;">
+			<select id="teamguild"></select>
+			<input id="teamname" type="text" placeholder="Name (up to 28 characters)" maxlength="28" autocorrect="off" autocapitalize="off">
+			<input id="teamsize" type="number" placeholder="Number of players (0-99)" autocorrect="off" autocapitalize="off">
+			<a class="btn btn-block btn-positive" id="saveteam">Save Team</a>
+		</form>
+	</div>
+</div>

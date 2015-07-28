@@ -1,0 +1,5 @@
+<div class="content-view slider">
+	<div class="slide-group">
+		<div class="slide" style="background-image: url('images/plots/{{card}}');"></div>
+	</div>
+</div>

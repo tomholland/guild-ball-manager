@@ -1,0 +1,9 @@
+{{#.}}
+<li>
+	<a class="listing-block" data-player-id="{{id}}">
+		<span class="cell name">{{name}}</span>
+		<span class="cell rice"><span class="badge"></span></span>
+		<span class="cell icon large"><span class="icon icon-plus"></span></span>
+	</a>
+</li>
+{{/.}}

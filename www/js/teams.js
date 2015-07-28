@@ -25,22 +25,26 @@ function Team() {
 	this.lastModified = null;
 }
 
+Warband.prototype.numPlayers = function() {
+	return this.players.length;
+}
+
 Team.prototype.mustacheData = function() {
 	var mustacheData = {
 		'guild': staticData.guilds[this.guild].name,
 		'players': []
 	};
-	for (var teamPlayerID in this.players) {
-		var teamPlayer = {
-			'name': staticData.guilds[this.guild].players[this.players[teamPlayerID].guildPlayerID].name
+	for (var playerID in this.players) {
+		var player = {
+			'name': staticData.guilds[this.guild].players[this.players].name
 		};
-		if (staticData.guilds[this.guild].players[this.players[teamPlayerID].guildPlayerID].hasOwnProperty('captain')) {
-			teamPlayer.captain = true;
+		if (staticData.guilds[this.guild].players[this.players].hasOwnProperty('captain')) {
+			player.captain = true;
 		}
-		if (staticData.guilds[this.guild].players[this.players[teamPlayerID].guildPlayerID].hasOwnProperty('mascot')) {
-			teamPlayer.mascot = true;
+		if (staticData.guilds[this.guild].players[this.players].hasOwnProperty('mascot')) {
+			player.mascot = true;
 		}
-		mustacheData.players.push({'name': staticData.guilds[this.guild].players[this.players[teamPlayerID].guildPlayerID].name});
+		mustacheData.players.push(player);
 	}
 	if (settingIsEnabled('lexicographicalsort')) {
 		mustacheData.players.sort(sortObjectArrayByObjectNameProperty);
@@ -48,20 +52,16 @@ Team.prototype.mustacheData = function() {
 	return mustacheData;
 }
 
-Team.prototype.addPlayer = function(guildPlayerID) {
-	this.players[generateUUID()] = {'guildPlayerID': guildPlayerID};
+Team.prototype.addPlayer = function(playerID) {
+	this.players.push(playerID);
 }
 
-Team.prototype.getPlayerID = function(teamPlayerID) {
-	return this.players[teamPlayerID].guildPlayerID;
+Team.prototype.getPlayerName = function(playerID) {
+	return staticData.guilds[this.guild].players[playerID].name;
 }
 
-Team.prototype.getPlayerName = function(teamPlayerID) {
-	return staticData.guilds[this.guild].players[this.players[teamPlayerID].guildPlayerID].name;
-}
-
-Team.prototype.removePlayer = function(teamPlayerID) {
-	delete this.players[teamPlayerID];
+Team.prototype.removePlayer = function(playerID) {
+	this.players.splice(this.players.indexOf(playerID), 1);
 }
 
 Team.prototype.save = function(callback) {
