@@ -6,7 +6,7 @@
 				<span class="listing-block">
 					<span class="cell name">{{title}}</span>
 					<span class="cell control">
-						<div class="toggle" id="{{id}}" data-default="{{default}}">
+						<div class="toggle" data-setting-id="{{id}}" data-default="{{default}}">
 							<div class="toggle-handle"></div>
 						</div>
 					</span>

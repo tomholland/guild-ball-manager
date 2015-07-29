@@ -153,9 +153,6 @@ function addEventsToRenderedView() {
 				renderView('player_cards', $(this).attr('data-player-id'));
 			});
 		break;
-		case 'player_cards':
-			
-		break;
 		case 'teams':
 			
 		break;
@@ -173,9 +170,6 @@ function addEventsToRenderedView() {
 				renderView('plot_card', $(this).attr('data-plot-id'));
 			});
 		break;
-		case 'plot_card':
-			
-		break;
 		case 'guides':
 			$('.content-items-list').find('a').tap(function() {
 				cordova.plugins.disusered.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
@@ -187,8 +181,15 @@ function addEventsToRenderedView() {
 			});
 		break;
 		case 'settings':
-			$('.content-items-list').find('a').tap(function() {
-				
+			loadSettings(function() {
+				$('.content-items-list').find('.toggle').each(function() {
+					if (settingIsEnabled($(this).attr('data-setting-id'), $(this).attr('data-default'))) {
+						$(this).addClass('active');
+					}
+				});
+			});
+			$('.content-items-list').find('.toggle').on('toggle', function(toggleEvent) {
+				settings[$(this).attr('data-setting-id')].save(toggleEvent.detail.isActive, null);
 			});
 		break;
 		case 'faqs':
@@ -197,7 +198,43 @@ function addEventsToRenderedView() {
 			});
 		break;
 		case 'faq':
-			
+			$('.content-view').find('a.external').tap(function() {
+				window.open(encodeURI($(this).attr('data-url')), '_system');
+			});
+			$('.content-view').find('a.email').tap(function() {
+				cordova.require('emailcomposer.EmailComposer').show({
+					to: $(this).attr('data-email'),
+					subject: $(this).attr('data-subject')
+				});
+			});
+			$('.content-view').find('a.twitter').tap(function() {
+				var username = $(this).attr('data-username');
+				appAvailability.check(
+					'tweetbot://',
+					function() { // success
+						window.open(encodeURI('tweetbot:///user_profile/'+username), '_system');
+					},
+					function() { // fail
+						appAvailability.check(
+							'twitterrific://',
+							function() { // success
+								window.open(encodeURI('twitterrific:///profile?screen_name='+username), '_system');
+							},
+							function() { // fail
+								appAvailability.check(
+									'twitter://',
+									function() { // success
+										window.open(encodeURI('twitter://user?screen_name='+username), '_system');
+									},
+									function() { // fail
+										window.open(encodeURI('https://twitter.com/'+username), '_system');
+									}
+								);
+							}
+						);
+					}
+				);
+			});
 		break;
 	}
 	

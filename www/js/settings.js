@@ -17,9 +17,9 @@ function Setting(id, enabled) {
 	this.enabled = enabled;
 }
 
-function settingIsEnabled(id) {
+function settingIsEnabled(id, defaultState) {
 	if (!settings.hasOwnProperty(id)) {
-		settings[id] = new Setting(id, ($('#'+id).attr('data-default') === 'enabled'));
+		settings[id] = new Setting(id, (defaultState === 'enabled'));
 	}
 	return settings[id].enabled;
 }
@@ -27,6 +27,8 @@ function settingIsEnabled(id) {
 Setting.prototype.save = function(enabled, callback) {
 	this.enabled = enabled;
 	settingsLawnchair.save({key: this.id, value: this.enabled}, function(record) {
-		callback(record);
+		if (callback !== null) {
+			callback(record);
+		}
 	});
 }
