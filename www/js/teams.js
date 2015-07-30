@@ -25,43 +25,16 @@ function Team() {
 	this.lastModified = null;
 }
 
-Warband.prototype.numPlayers = function() {
-	return this.players.length;
-}
-
-Team.prototype.mustacheData = function() {
-	var mustacheData = {
-		'guild': staticData.guilds[this.guild].name,
-		'players': []
-	};
-	for (var playerID in this.players) {
-		var player = {
-			'name': staticData.guilds[this.guild].players[this.players].name
-		};
-		if (staticData.guilds[this.guild].players[this.players].hasOwnProperty('captain')) {
-			player.captain = true;
-		}
-		if (staticData.guilds[this.guild].players[this.players].hasOwnProperty('mascot')) {
-			player.mascot = true;
-		}
-		mustacheData.players.push(player);
-	}
-	if (settingIsEnabled('lexicographicalsort')) {
-		mustacheData.players.sort(sortObjectArrayByObjectNameProperty);
-	}
-	return mustacheData;
-}
-
 Team.prototype.addPlayer = function(playerID) {
-	this.players.push(playerID);
+	this.players[generateUUID()] = {'playerID': playerID};
 }
 
-Team.prototype.getPlayerName = function(playerID) {
-	return staticData.guilds[this.guild].players[playerID].name;
+Team.prototype.getPlayerName = function(teamPlayerID) {
+	return staticData.guilds[this.guild].players[this.players[teamPlayerID].playerID].name;
 }
 
-Team.prototype.removePlayer = function(playerID) {
-	this.players.splice(this.players.indexOf(playerID), 1);
+Team.prototype.removePlayer = function(teamPlayerID) {
+	delete this.players[teamPlayerID];
 }
 
 Team.prototype.save = function(callback) {
@@ -83,4 +56,18 @@ Team.prototype.delete = function(callback) {
 	teamsLawnchair.remove(this.id, function() {
 		callback();
 	});
+}
+
+Team.prototype.isComplete = function() {
+	var countCaptainsFound = 0;
+	var countMascotsFound = 0;
+	Object.keys(this.players).forEach(function(teamPlayerID) {
+		if (staticData.guilds[this.guild].players[this.players[teamPlayerID].playerID].hasOwnProperty('captain')) {
+			countCaptainsFound++;
+		}
+		if (staticData.guilds[this.guild].players[this.players[teamPlayerID].playerID].hasOwnProperty('mascot')) {
+			countMascotsFound++;
+		}
+	});
+	return (this.players.length <= this.playerLimit && countCaptainsFound === 1 && countMascotsFound === 1);
 }

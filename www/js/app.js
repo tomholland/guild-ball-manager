@@ -16,6 +16,10 @@ function generateUUID() {
 	return uuid.toUpperCase();
 }
 
+function sortObjectArrayByObjectNameProperty(objA, objB) {
+	return alphanumCase(objA.name, objB.name);
+}
+
 function renderView(templateId, contentId) {
 	var templateData = {};
 	switch(templateId) {
@@ -46,7 +50,27 @@ function renderView(templateId, contentId) {
 		break;
 		case 'teams':
 			$('#title').html('Teams');
-			
+			var teamsSortArray = [];
+			Object.keys(teams).forEach(function(teamID) {
+				teamsSortArray.push({
+					id: teamID,
+					name: teams[teamID].name
+				});
+			});
+			if (settingIsEnabled('lexicographicalsort')) {
+				teamsSortArray.sort(sortObjectArrayByObjectNameProperty);
+			}
+			templateData.teams = [];
+			teamsSortArray.forEach(function(team) {
+				templateData.teams.push({
+					id: team.id,
+					image: staticData.guilds[teams[team.id].guild].image,
+					name: team.name,
+					complete: teams[team.id].isComplete(),
+					num_players: teams[team.id].players.length,
+					player_limit: teams[team.id].playerLimit
+				});
+			});
 			$('#back').removeClass('shown');
 			$('#add').addClass('shown');
 		break;
