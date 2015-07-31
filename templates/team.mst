@@ -1,19 +1,14 @@
-<div class="content-view" id="teamplayers" data-back-content-view-id="teams">
+<div class="content-view content-padded">
 	<div class="content-view-scroll-wrapper">
-		<ul class="content-items-list">
-			{{#.}}
-			<li>
-				<div class="swipe-wrapper actions-2">
-					<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="{{player_id}}"><span class="icon-wrapper"><span class="icon icon-more"></span></span></a>
-					<a class="action-block action-2 delete" data-warband-character-id="{{player_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
-					<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-{{team_player_id}}-cards">
-						<span class="cell name">{{name}}</span>
-						<span class="cell rice warband-character"><span class="badge"></span></span>
-						<span class="cell icon"><span class="icon icon-right"></span></span>
-					</a>
-				</div>
-			</li>
-			{{/.}}
-		</ul>
+		<form>
+			<select id="teamguild">
+				{{#guilds}}
+				<option value="{{id}}"{{#selected}} selected="selected"{{/selected}}>{{name}}</option>
+				{{/guilds}}
+			</select>
+			<input id="teamname" type="text" placeholder="Name (up to 28 characters)" maxlength="28" autocorrect="off" autocapitalize="off">
+			<input id="teamsize" type="number" placeholder="Number of players (0-99)" autocorrect="off" autocapitalize="off">
+			<a class="btn btn-block btn-positive" id="saveteam">Save Team</a>
+		</form>
 	</div>
 </div>

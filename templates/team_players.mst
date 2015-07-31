@@ -1,0 +1,19 @@
+<div class="content-view" id="teamplayers" data-back-content-view-id="teams">
+	<div class="content-view-scroll-wrapper">
+		<ul class="content-items-list">
+			{{#.}}
+			<li>
+				<div class="swipe-wrapper actions-2">
+					<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="{{player_id}}"><span class="icon-wrapper"><span class="icon icon-more"></span></span></a>
+					<a class="action-block action-2 delete" data-warband-character-id="{{player_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
+					<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-{{team_player_id}}-cards">
+						<span class="cell name">{{name}}</span>
+						<span class="cell rice warband-character"><span class="badge"></span></span>
+						<span class="cell icon"><span class="icon icon-right"></span></span>
+					</a>
+				</div>
+			</li>
+			{{/.}}
+		</ul>
+	</div>
+</div>

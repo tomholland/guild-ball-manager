@@ -19,7 +19,7 @@ function loadTeams(callback) {
 function Team() {
 	this.id = null;
 	this.name = null;
-	this.guild = null;
+	this.guildId = null;
 	this.playerLimit = null;
 	this.players = {};
 	this.lastModified = null;
@@ -30,7 +30,7 @@ Team.prototype.addPlayer = function(playerID) {
 }
 
 Team.prototype.getPlayerName = function(teamPlayerID) {
-	return staticData.guilds[this.guild].players[this.players[teamPlayerID].playerID].name;
+	return staticData.guilds[this.guildId].players[this.players[teamPlayerID].playerID].name;
 }
 
 Team.prototype.removePlayer = function(teamPlayerID) {
@@ -62,10 +62,10 @@ Team.prototype.isComplete = function() {
 	var countCaptainsFound = 0;
 	var countMascotsFound = 0;
 	Object.keys(this.players).forEach(function(teamPlayerID) {
-		if (staticData.guilds[this.guild].players[this.players[teamPlayerID].playerID].hasOwnProperty('captain')) {
+		if (staticData.guilds[this.guildId].players[this.players[teamPlayerID].playerID].hasOwnProperty('captain')) {
 			countCaptainsFound++;
 		}
-		if (staticData.guilds[this.guild].players[this.players[teamPlayerID].playerID].hasOwnProperty('mascot')) {
+		if (staticData.guilds[this.guildId].players[this.players[teamPlayerID].playerID].hasOwnProperty('mascot')) {
 			countMascotsFound++;
 		}
 	});

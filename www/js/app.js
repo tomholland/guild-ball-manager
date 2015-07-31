@@ -1,6 +1,7 @@
 var contentViewWidth = 0;
 var currentTemplateId = null;
 var selectedGuildId = null;
+var selectedTeamId = null;
 
 function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
@@ -74,19 +75,26 @@ function renderView(templateId, contentId) {
 			$('#back').removeClass('shown');
 			$('#add').addClass('shown');
 		break;
-		case 'create_team':
-			$('#title').html('Create team');
-			
+		case 'team':
+			$('#title').html(((selectedTeamId === null) ? 'Create':'Edit')+' team');
+			templateData.guilds = [];
+			Object.keys(staticData.guilds).forEach(function(guildId) {
+				templateData.guilds.push({
+					id: guildId,
+					name: staticData.guilds[guildId].name,
+					selected: (selectedTeamId !== null && teams[selectedTeamId].guildId == guildId)
+				});
+			});
 			$('#back').addClass('shown');
 			$('#add').removeClass('shown');
 		break;
-		case 'team':
+		case 'team_players':
 			$('#title').html();
 			
 			$('#back').addClass('shown');
 			$('#add').addClass('shown');
 		break;
-		case 'add_player':
+		case 'team_add_player':
 			$('#title').html('Add player to team');
 			/*
 			Object.keys(staticData.guilds).forEach(function(guildId) {
@@ -180,13 +188,82 @@ function addEventsToRenderedView() {
 		case 'teams':
 			
 		break;
-		case 'create_team':
-			
-		break;
 		case 'team':
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
+			$('#saveteam').tap(function() {
+				/*
+				$('#teamguild').val()
+				$('#teamname').val()
+				$('#teamsize').val()
+				
+				var warbandFaction = $('#warbandfaction').val();
+				var warbandName = $('#warbandname').val().trim();
+				var warbandRice = $('#warbandrice').val().trim();
+				if ($(this).attr('data-mode') === 'add' && Object.keys(staticData.factions).indexOf(warbandFaction) < 0) {
+					navigator.notification.alert(
+						'Please select a faction',
+						function() {
+							$('#warbandfaction').focus();
+						}
+					);
+					return;
+				}
+				if (!warbandName.length) {
+					navigator.notification.alert(
+						'Please enter a Warband name',
+						function() {
+							$('#warbandname').focus();
+						}
+					);
+					return;
+				}
+				if (warbandName.length > 28) {
+					navigator.notification.alert(
+						'Warband names are limited to 28 characters',
+						function() {
+							$('#warbandname').focus();
+						}
+					);
+					return;
+				}
+				if (!warbandRice.match(/^[0-9]{1,2}$/)) {
+					navigator.notification.alert(
+						'Please enter a rice limit between 0 and 99',
+						function() {
+							$('#warbandrice').focus();
+						}
+					);
+					return;
+				}
+				$('input,select').blur();
+				warbandRice = parseInt(warbandRice, 10);
+				if ($(this).attr('data-mode') === 'edit') {
+					warbands[selectedWarbandID].name = warbandName;
+					warbands[selectedWarbandID].playerLimit = warbandRice;
+				} else {
+					var newWarbandID = generateUUID();
+					warbands[newWarbandID] = new Warband();
+					warbands[newWarbandID].id = newWarbandID;
+					warbands[newWarbandID].faction = warbandFaction;
+					warbands[newWarbandID].name = warbandName;
+					warbands[newWarbandID].playerLimit = warbandRice;
+					selectedWarbandID = newWarbandID;
+				}
+				warbands[selectedWarbandID].save(function() {
+					drawWarbands();
+					drawWarbandCharacters();
+					$('#add').attr('data-target-content-view-id', 'warbandcharacter').addClass('shown');
+					swapContentView('warband', 'warbandcharacters', null);
+				});
+				*/
+			});
+		break;
+		case 'team_players':
 			
 		break;
-		case 'add_player':
+		case 'team_add_player':
 			
 		break;
 		case 'plots':
@@ -289,12 +366,11 @@ document.addEventListener('deviceready', function() {
 			case 'player_cards':
 				renderView('guild_players', selectedGuildId);
 			break;
-			case 'create_team':
 			case 'team':
-				renderView('teams', null);
+			case 'team_players':
 				renderView('teams', null);
 			break;
-			case 'add_player':
+			case 'team_add_player':
 				
 			break;
 			case 'plot_card':
@@ -312,11 +388,11 @@ document.addEventListener('deviceready', function() {
 	
 	//$('#add').tap(function() {
 	$('#add').on('click', function() {
-		switch(templateId) {
+		switch(currentTemplateId) {
 			case 'teams':
-				
+				renderView('team', null);
 			break;
-			case 'team':
+			case 'team_players':
 				
 			break;
 		}
