@@ -50,30 +50,35 @@ function renderView(templateId, contentId) {
 			$('#add').removeClass('shown');
 		break;
 		case 'teams':
-			$('#title').html('Teams');
-			var teamsSortArray = [];
-			Object.keys(teams).forEach(function(teamID) {
-				teamsSortArray.push({
-					id: teamID,
-					name: teams[teamID].name
+			loadTeams(function() {
+				$('#title').html('Teams');
+				var teamsSortArray = [];
+				Object.keys(teams).forEach(function(teamId) {
+					teamsSortArray.push({
+						id: teamId,
+						name: teams[teamId].name
+					});
+				});
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						teamsSortArray.sort(sortObjectArrayByObjectNameProperty);
+					}
+					templateData.teams = [];
+					teamsSortArray.forEach(function(team) {
+						templateData.teams.push({
+							id: team.id,
+							image: staticData.guilds[teams[team.id].guildId].image,
+							name: team.name,
+							complete: teams[team.id].isComplete(),
+							num_players: teams[team.id].playerIds().length,
+							player_limit: teams[team.id].playerLimit
+						});
+					});
+					$('#back').removeClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
 				});
 			});
-			if (settingIsEnabled('lexicographicalsort')) {
-				teamsSortArray.sort(sortObjectArrayByObjectNameProperty);
-			}
-			templateData.teams = [];
-			teamsSortArray.forEach(function(team) {
-				templateData.teams.push({
-					id: team.id,
-					image: staticData.guilds[teams[team.id].guild].image,
-					name: team.name,
-					complete: teams[team.id].isComplete(),
-					num_players: teams[team.id].players.length,
-					player_limit: teams[team.id].playerLimit
-				});
-			});
-			$('#back').removeClass('shown');
-			$('#add').addClass('shown');
 		break;
 		case 'team':
 			$('#title').html(((selectedTeamId === null) ? 'Create':'Edit')+' team');
@@ -89,29 +94,38 @@ function renderView(templateId, contentId) {
 			$('#add').removeClass('shown');
 		break;
 		case 'team_players':
-			$('#title').html();
-			
-			$('#back').addClass('shown');
-			$('#add').addClass('shown');
+			loadTeams(function() {
+				$('#title').html(htmlEncode(teams[selectedTeamId].name));
+				templateData.players = [];
+				Object.keys(teams[selectedTeamId].players).forEach(function(teamPlayerId) {
+					var player = staticData.guilds[teams[selectedTeamId].players[teamPlayerId].guildId].players[teams[selectedTeamId].players[teamPlayerId].playerId];
+					templateData.players.push({
+						team_player_id: teamPlayerId,
+						player_id: player.id,
+						name: player.name,
+						captain: player.hasOwnProperty('captain'),
+						mascot: player.hasOwnProperty('mascot'),
+						striker: player.hasOwnProperty('striker'),
+						winger: player.hasOwnProperty('winger'),
+						defensive_midfielder: player.hasOwnProperty('defensive_midfielder'),
+						attacking_midfielder: player.hasOwnProperty('attacking_midfielder'),
+						central_midfielder: player.hasOwnProperty('central_midfielder'),
+						centre_back: player.hasOwnProperty('centre_back')
+					});
+				});
+				$('#back').addClass('shown');
+				$('#add').addClass('shown');
+				renderTemplate(templateId, templateData)
+			});
 		break;
 		case 'team_add_player':
-			$('#title').html('Add player to team');
-			/*
-			Object.keys(staticData.guilds).forEach(function(guildId) {
-				staticData.guilds[guildId].name
-				staticData.guilds[guildId].image
-				staticData.guilds[guildId].has_shareable_players?
-				Object.keys(staticData.guilds[guildId].players).forEach(function(playerId) {
-					staticData.guilds[guildId].players[playerId].name
-					staticData.guilds[guildId].players[playerId].captain?
-					staticData.guilds[guildId].players[playerId].mascot?
-					staticData.guilds[guildId].players[playerId].also_available_to? // union
-					staticData.guilds[guildId].players[playerId].cards
-				});
+			loadTeams(function() {
+				$('#title').html('Add player to team');
+				
+				$('#back').addClass('shown');
+				$('#add').removeClass('shown');
+				renderTemplate(templateId, templateData)
 			});
-			*/
-			$('#back').addClass('shown');
-			$('#add').removeClass('shown');
 		break;
 		case 'plots':
 			$('#title').html('Plots');
@@ -167,10 +181,26 @@ function renderView(templateId, contentId) {
 			$('#add').removeClass('shown');
 		break;
 	}
+	renderTemplate(templateId, templateData);
+}
+
+function renderTemplate(templateId, templateData) {
 	$('.content').empty().html(Mustache.render(staticData.templates[templateId], templateData));
 	$('.content-view .content-view-scroll-wrapper').css({width: contentViewWidth+'px', height: $('.content').height()+'px'});
 	currentTemplateId = templateId;
 	addEventsToRenderedView();
+}
+
+function setupSwipeableListing(parentalElement) {
+	var actionBlockWidth = 50;
+	parentalElement.find('.swipe-wrapper').swipeLeft(function() {
+		$(this).addClass('offset');
+	}).swipeRight(function() {
+		$(this).removeClass('offset');
+	});
+	parentalElement.find('.action-1').css('margin-left', contentViewWidth+'px');
+	parentalElement.find('.action-2').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
+	parentalElement.find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
 }
 
 function addEventsToRenderedView() {
@@ -186,85 +216,181 @@ function addEventsToRenderedView() {
 			});
 		break;
 		case 'teams':
-			
+			setupSwipeableListing($('.content-items-list'));
+			$('.content-items-list').find('.action-block').tap(function() {
+				if ($(this).hasClass('share')) {
+					var teamId = $(this).attr('data-team-id');
+					var params = {
+						'subject': 'Guild Ball team: '+teams[teamId].name,
+						'onSuccess': function() {
+							$('#teams').find('.swipe-wrapper.offset').removeClass('offset');
+						},
+						'onError': function() {
+							$('#teams').find('.swipe-wrapper.offset').removeClass('offset');
+						}
+					};
+					var emailTemplateData = {
+						guild_name: staticData.guilds[teams[teamId].guildId].name,
+						name: teams[teamId].name,
+						players: []
+					};
+					Object.keys(teams[teamId].players).forEach(function(teamPlayerId) {
+						emailTemplateData.players.push(staticData.guilds[teams[teamId].players[teamPlayerId].guildId].players[teams[teamId].players[teamPlayerId].playerId]);
+					});
+					loadSettings(function() {
+						if (settingIsEnabled('htmlemailsetting')) {
+							params.body = Mustache.render(staticData.templates.team_email_html, emailTemplateData);
+							params.isHtml = true;
+						} else {
+							params.body = Mustache.render(staticData.templates.team_email_txt, emailTemplateData);
+						}
+						cordova.require('emailcomposer.EmailComposer').show(params);
+					});					
+				} else if ($(this).hasClass('edit')) {
+					selectedTeamId = $(this).attr('data-team-id');
+					renderView('team', null);
+				} else if ($(this).hasClass('delete')) {
+					navigator.notification.confirm(
+						'Are you sure you want to delete the team '+teams[selectedTeamId].name+'?',
+						function(button) {
+							if (button !== 2) {
+								return;
+							}
+							teams[selectedTeamId].delete(function() {
+								delete teams[selectedTeamId];
+								renderView('teams', null);
+							});
+						},
+						'Delete team',
+						['Cancel','Delete']
+					);
+				}
+			});
+			$('.content-items-list').find('.listing-block').tap(function() {
+				selectedTeamId = $(this).attr('data-team-id');
+				renderView('team_players', null);
+			});
 		break;
 		case 'team':
 			$('.content-view').find('form').on('submit', function(e) {
 				e.preventDefault();
 			});
 			$('#saveteam').tap(function() {
-				/*
-				$('#teamguild').val()
-				$('#teamname').val()
-				$('#teamsize').val()
-				
-				var warbandFaction = $('#warbandfaction').val();
-				var warbandName = $('#warbandname').val().trim();
-				var warbandRice = $('#warbandrice').val().trim();
-				if ($(this).attr('data-mode') === 'add' && Object.keys(staticData.factions).indexOf(warbandFaction) < 0) {
+				var teamGuildId = $('#teamguild').val();
+				var teamName = $('#teamname').val().trim();
+				var teamPlayerLimit = $('#teamsize').val().trim();
+				if (selectedTeamId === null
+					&& Object.keys(staticData.guilds).indexOf(teamGuildId) < 0) {
+					/*
 					navigator.notification.alert(
-						'Please select a faction',
+						'Please select a guild',
 						function() {
-							$('#warbandfaction').focus();
+							$('#teamguild').focus();
 						}
 					);
+					*/
 					return;
 				}
-				if (!warbandName.length) {
+				if (!teamName.length) {
+					/*
 					navigator.notification.alert(
-						'Please enter a Warband name',
+						'Please enter a team name',
 						function() {
-							$('#warbandname').focus();
+							$('#teamname').focus();
 						}
 					);
+					*/
 					return;
 				}
-				if (warbandName.length > 28) {
+				if (teamName.length > 28) {
+					/*
 					navigator.notification.alert(
-						'Warband names are limited to 28 characters',
+						'Team names are limited to 28 characters',
 						function() {
-							$('#warbandname').focus();
+							$('#teamname').focus();
 						}
 					);
+					*/
 					return;
 				}
-				if (!warbandRice.match(/^[0-9]{1,2}$/)) {
+				if (!teamPlayerLimit.match(/^[0-9]{1,2}$/)) {
+					/*
 					navigator.notification.alert(
-						'Please enter a rice limit between 0 and 99',
+						'Please enter a player limit between 0 and 99',
 						function() {
-							$('#warbandrice').focus();
+							$('#teamsize').focus();
 						}
 					);
+					*/
 					return;
 				}
 				$('input,select').blur();
-				warbandRice = parseInt(warbandRice, 10);
-				if ($(this).attr('data-mode') === 'edit') {
-					warbands[selectedWarbandID].name = warbandName;
-					warbands[selectedWarbandID].playerLimit = warbandRice;
+				teamPlayerLimit = parseInt(teamPlayerLimit, 10);
+				if (selectedTeamId === null) {
+					var newTeamId = generateUUID();
+					teams[newTeamId] = new Team();
+					teams[newTeamId].id = newTeamId;
+					teams[newTeamId].guildId = teamGuildId;
+					teams[newTeamId].name = teamName;
+					teams[newTeamId].playerLimit = teamPlayerLimit;
 				} else {
-					var newWarbandID = generateUUID();
-					warbands[newWarbandID] = new Warband();
-					warbands[newWarbandID].id = newWarbandID;
-					warbands[newWarbandID].faction = warbandFaction;
-					warbands[newWarbandID].name = warbandName;
-					warbands[newWarbandID].playerLimit = warbandRice;
-					selectedWarbandID = newWarbandID;
+					teams[selectedTeamId].guildId = teamGuildId;
+					teams[selectedTeamId].name = teamName;
+					teams[selectedTeamId].playerLimit = teamPlayerLimit;
 				}
-				warbands[selectedWarbandID].save(function() {
-					drawWarbands();
-					drawWarbandCharacters();
-					$('#add').attr('data-target-content-view-id', 'warbandcharacter').addClass('shown');
-					swapContentView('warband', 'warbandcharacters', null);
+				teams[((selectedTeamId === null) ? newTeamId:selectedTeamId)].save(function() {
+					renderView('teams', null);
 				});
-				*/
 			});
 		break;
 		case 'team_players':
-			
+			setupSwipeableListing($('.content-items-list'));
+			$('.content-items-list').find('.action-block.delete').tap(function() {
+				var playerId = $(this).attr('data-team-player-id');
+				navigator.notification.confirm(
+					'Are you sure you want to delete '+teams[selectedTeamId].getPlayerName(teamPlayerId)+' from your team "'+teams[selectedTeamId].name+'"?',
+					function(button) {
+						if (button !== 2) {
+							return;
+						}
+						teams[selectedTeamId].removePlayer(teamPlayerId);
+						teams[selectedTeamId].save(function() {
+							renderView('team_players', null);
+						});
+					},
+					'Delete team player',
+					['Cancel','Delete']
+				);
+			});
+			$('.content-items-list').find('.listing-block').tap(function() {
+				renderView('player_cards', $(this).attr('data-player-id'));
+			});
 		break;
 		case 'team_add_player':
-			
+			/*
+			search input
+				var existingPlayerIdsInTeam = teams[selectedTeamId].playerIds();
+				Object.keys(staticData.guilds).forEach(function(guildId) {
+				
+					if (guildId === teams[selectedTeamId].guildId
+						|| staticData.guilds[guildId].hasOwnProperty('has_shareable_players') // union
+					
+					staticData.guilds[guildId].image
+					
+					Object.keys(staticData.guilds[guildId].players).forEach(function(playerId) {
+						
+						
+						guildId !== teams[selectedTeamId].guildId
+						&& staticData.guilds[guildId].players[playerId].hasOwnProperty('also_available_to') && indexOf guildId // union
+						
+						staticData.guilds[guildId].players[playerId].name
+						
+					});
+				});
+				click events on search results
+					teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'))
+					renderView('team_players', null);
+			*/
 		break;
 		case 'plots':
 			$('.content-items-list').find('a').tap(function() {
@@ -288,10 +414,10 @@ function addEventsToRenderedView() {
 						$(this).addClass('active');
 					}
 				});
-			});
-			$('.content-items-list').find('.toggle').on('toggle', function(toggleEvent) {
-				settings[$(this).attr('data-setting-id')].save(toggleEvent.detail.isActive, null);
-			});
+				$('.content-items-list').find('.toggle').on('toggle', function(toggleEvent) {
+					settings[$(this).attr('data-setting-id')].save(toggleEvent.detail.isActive, null);
+				});
+			});			
 		break;
 		case 'faqs':
 			$('.content-items-list').find('a').tap(function() {
@@ -371,7 +497,7 @@ document.addEventListener('deviceready', function() {
 				renderView('teams', null);
 			break;
 			case 'team_add_player':
-				
+				renderView('teams', selectedTeamId);
 			break;
 			case 'plot_card':
 				renderView('plots', null);
@@ -390,10 +516,11 @@ document.addEventListener('deviceready', function() {
 	$('#add').on('click', function() {
 		switch(currentTemplateId) {
 			case 'teams':
+				selectedTeamId = null;
 				renderView('team', null);
 			break;
 			case 'team_players':
-				
+				renderView('team_add_player', null);
 			break;
 		}
 	});

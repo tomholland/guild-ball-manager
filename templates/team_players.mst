@@ -1,19 +1,27 @@
-<div class="content-view" id="teamplayers" data-back-content-view-id="teams">
+<div class="content-view">
 	<div class="content-view-scroll-wrapper">
 		<ul class="content-items-list">
-			{{#.}}
+			{{#players}}
 			<li>
-				<div class="swipe-wrapper actions-2">
-					<a class="action-block action-1 edit change-content-view appear-from-right" data-target-content-view-id="warbandcharacter" data-warband-character-id="{{player_id}}"><span class="icon-wrapper"><span class="icon icon-more"></span></span></a>
-					<a class="action-block action-2 delete" data-warband-character-id="{{player_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
-					<a class="listing-block change-content-view appear-from-right" data-target-content-view-id="faction-character-{{team_player_id}}-cards">
+				<div class="swipe-wrapper actions-1">
+					<a class="action-block action-1 delete" data-team-player-id="{{team_player_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
+					<a class="listing-block" data-player-id="{{player_id}}">
 						<span class="cell name">{{name}}</span>
-						<span class="cell rice warband-character"><span class="badge"></span></span>
+						<span class="cell type team-player">
+							{{#captain}}<span class="badge captain">CPT</span>{{/captain}}
+							{{#mascot}}<span class="badge mascot">MAS</span>{{/mascot}}
+							{{#striker}}<span class="badge striker">STR</span>{{/striker}}
+							{{#winger}}<span class="badge winger">WNG</span>{{/winger}}
+							{{#defensive_midfielder}}<span class="badge defensive-midfielder">DMF</span>{{/defensive_midfielder}}
+							{{#attacking_midfielder}}<span class="badge attacking-midfielder">AMF</span>{{/attacking_midfielder}}
+							{{#central_midfielder}}<span class="badge central-midfielder">CMF</span>{{/central_midfielder}}
+							{{#centre_back}}<span class="badge centre-back">CBK</span>{{/centre_back}}
+						</span>
 						<span class="cell icon"><span class="icon icon-right"></span></span>
 					</a>
 				</div>
 			</li>
-			{{/.}}
+			{{/players}}
 		</ul>
 	</div>
 </div>

@@ -1,7 +1,12 @@
-var teams = {};
+var teams = null;
 var teamsLawnchair;
 
 function loadTeams(callback) {
+	if (teams !== null) {
+		callback();
+		return;
+	}
+	teams = {};
 	teamsLawnchair = new Lawnchair({adapter:'dom', name:'teams'}, function(store) {
 		store.all(function(records) {
 			records.forEach(function(record) {
@@ -12,8 +17,8 @@ function loadTeams(callback) {
 				teams[team.id] = team;
 			});
 		});
+		callback();
 	});
-	callback();
 }
 
 function Team() {
@@ -25,16 +30,19 @@ function Team() {
 	this.lastModified = null;
 }
 
-Team.prototype.addPlayer = function(playerID) {
-	this.players[generateUUID()] = {'playerID': playerID};
+Team.prototype.addPlayer = function(guildId, playerId) {
+	this.players[generateUUID()] = {
+		guildId: guildId,
+		playerId: playerId
+	};
 }
 
-Team.prototype.getPlayerName = function(teamPlayerID) {
-	return staticData.guilds[this.guildId].players[this.players[teamPlayerID].playerID].name;
+Team.prototype.getPlayerName = function(teamPlayerId) {
+	return staticData.guilds[this.guildId].players[this.players[teamPlayerId].playerId].name;
 }
 
-Team.prototype.removePlayer = function(teamPlayerID) {
-	delete this.players[teamPlayerID];
+Team.prototype.removePlayer = function(teamPlayerId) {
+	delete this.players[teamPlayerId];
 }
 
 Team.prototype.save = function(callback) {
@@ -58,14 +66,22 @@ Team.prototype.delete = function(callback) {
 	});
 }
 
+Team.prototype.playerIds = function() {
+	var playerIds = [];
+	Object.keys(this.players).forEach(function(teamPlayerId) {
+		players.push(this.players[teamPlayerId].playerId);
+	});
+	return playerIds;
+}
+
 Team.prototype.isComplete = function() {
 	var countCaptainsFound = 0;
 	var countMascotsFound = 0;
-	Object.keys(this.players).forEach(function(teamPlayerID) {
-		if (staticData.guilds[this.guildId].players[this.players[teamPlayerID].playerID].hasOwnProperty('captain')) {
+	Object.keys(this.players).forEach(function(teamPlayerId) {
+		if (staticData.guilds[this.guildId].players[this.players[teamPlayerId].playerId].hasOwnProperty('captain')) {
 			countCaptainsFound++;
 		}
-		if (staticData.guilds[this.guildId].players[this.players[teamPlayerID].playerID].hasOwnProperty('mascot')) {
+		if (staticData.guilds[this.guildId].players[this.players[teamPlayerId].playerId].hasOwnProperty('mascot')) {
 			countMascotsFound++;
 		}
 	});

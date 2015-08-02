@@ -8,7 +8,7 @@
 					<a class="action-block action-2 edit" data-team-id="{{id}}"><span class="icon-wrapper"><span class="icon icon-edit"></span></span></a>
 					<a class="action-block action-3 delete" data-team-id="{{id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
 					<a class="listing-block" data-team-id="{{id}}">
-						<span class="cell image"><img src="images/factions/{{image}}"></span>
+						<span class="cell image"><img src="images/guilds/{{image}}"></span>
 						<span class="cell name">{{name}}</span>
 						<span class="cell player-count team"><span class="badge{{^complete}} error{{/complete}}{{#complete}} match{{/complete}}">{{num_players}}/{{player_limit}}</span></span>
 						<span class="cell icon"><span class="icon icon-right"></span></span>

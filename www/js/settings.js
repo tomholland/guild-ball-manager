@@ -1,15 +1,20 @@
-var settings = {};
+var settings = null;
 var settingsLawnchair;
 
 function loadSettings(callback) {
+	if (settings !== null) {
+		callback();
+		return;
+	}
+	settings = {};
 	settingsLawnchair = new Lawnchair({adapter:'dom', name:'settings'}, function(store) {
 		store.all(function(records) {
 			records.forEach(function(record) {
 				settings[record.key] = new Setting(record.key, record.value);
 			});
 		});
+		callback();
 	});
-	callback();
 }
 
 function Setting(id, enabled) {
