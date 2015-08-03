@@ -7,7 +7,7 @@ function htmlEncode(value){
 	return $('<div/>').text(value).html().replace(/\"/g, '&quot;');
 }
 
-function generateUUID() {
+function generateUuid() {
 	var d = new Date().getTime();
 	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = (d + Math.random()*16)%16 | 0;
@@ -17,8 +17,16 @@ function generateUUID() {
 	return uuid.toUpperCase();
 }
 
-function sortObjectArrayByObjectNameProperty(objA, objB) {
+function sortObjectArrayByNameProperty(objA, objB) {
 	return alphanumCase(objA.name, objB.name);
+}
+
+function cloneProperties(sourceObj, targetObj) {
+	for (var prop in sourceObj) {
+		if (sourceObj.hasOwnProperty(prop)) {
+			targetObj[prop] = sourceObj[prop];
+		}
+	}
 }
 
 function renderView(templateId, contentId) {
@@ -61,7 +69,7 @@ function renderView(templateId, contentId) {
 				});
 				loadSettings(function() {
 					if (settingIsEnabled('lexicographicalsort')) {
-						teamsSortArray.sort(sortObjectArrayByObjectNameProperty);
+						teamsSortArray.sort(sortObjectArrayByNameProperty);
 					}
 					templateData.teams = [];
 					teamsSortArray.forEach(function(team) {
@@ -98,33 +106,32 @@ function renderView(templateId, contentId) {
 				$('#title').html(htmlEncode(teams[selectedTeamId].name));
 				templateData.players = [];
 				Object.keys(teams[selectedTeamId].players).forEach(function(teamPlayerId) {
-					var player = staticData.guilds[teams[selectedTeamId].players[teamPlayerId].guildId].players[teams[selectedTeamId].players[teamPlayerId].playerId];
-					templateData.players.push({
+					var player = {
+						guild_id: teams[selectedTeamId].players[teamPlayerId].guildId,
 						team_player_id: teamPlayerId,
-						player_id: player.id,
-						name: player.name,
-						captain: player.hasOwnProperty('captain'),
-						mascot: player.hasOwnProperty('mascot'),
-						striker: player.hasOwnProperty('striker'),
-						winger: player.hasOwnProperty('winger'),
-						defensive_midfielder: player.hasOwnProperty('defensive_midfielder'),
-						attacking_midfielder: player.hasOwnProperty('attacking_midfielder'),
-						central_midfielder: player.hasOwnProperty('central_midfielder'),
-						centre_back: player.hasOwnProperty('centre_back')
-					});
+					};
+					cloneProperties(
+						staticData.guilds[teams[selectedTeamId].players[teamPlayerId].guildId].players[teams[selectedTeamId].players[teamPlayerId].playerId],
+						player
+					);
+					templateData.players.push(player);
 				});
-				$('#back').addClass('shown');
-				$('#add').addClass('shown');
-				renderTemplate(templateId, templateData)
+				loadSettings(function() {
+					if (settingIsEnabled('lexicographicalsort')) {
+						templateData.players.sort(sortObjectArrayByNameProperty);
+					}
+					$('#back').addClass('shown');
+					$('#add').addClass('shown');
+					renderTemplate(templateId, templateData);
+				});
 			});
 		break;
 		case 'team_add_player':
 			loadTeams(function() {
 				$('#title').html('Add player to team');
-				
 				$('#back').addClass('shown');
 				$('#add').removeClass('shown');
-				renderTemplate(templateId, templateData)
+				renderTemplate(templateId, templateData);
 			});
 		break;
 		case 'plots':
@@ -186,9 +193,13 @@ function renderView(templateId, contentId) {
 
 function renderTemplate(templateId, templateData) {
 	$('.content').empty().html(Mustache.render(staticData.templates[templateId], templateData));
-	$('.content-view .content-view-scroll-wrapper').css({width: contentViewWidth+'px', height: $('.content').height()+'px'});
+	setContentScrollViewWrapperDimensions();
 	currentTemplateId = templateId;
 	addEventsToRenderedView();
+}
+
+function setContentScrollViewWrapperDimensions() {
+	$('.content-view .content-view-scroll-wrapper').css({width: contentViewWidth+'px', height: $('.content').height()+'px'});
 }
 
 function setupSwipeableListing(parentalElement) {
@@ -201,6 +212,56 @@ function setupSwipeableListing(parentalElement) {
 	parentalElement.find('.action-1').css('margin-left', contentViewWidth+'px');
 	parentalElement.find('.action-2').css('margin-left', (contentViewWidth + actionBlockWidth)+'px');
 	parentalElement.find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
+}
+
+function populatePlayerSuggestions(search) {
+	var existingPlayerIdsInTeam = teams[selectedTeamId].playerIds();
+	var teamGuildPlayers = []
+	Object.keys(staticData.guilds[teams[selectedTeamId].guildId].players).forEach(function(teamPlayerId) {
+		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[teamPlayerId].playerId) < 0
+			&& (search.length === 0 || (staticData.guilds[teams[selectedTeamId].guildId].players[teamPlayerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+			var player = {
+				guild_id: teams[selectedTeamId].guildId,
+				guild_image: staticData.guilds[teams[selectedTeamId].guildId].image
+			};
+			cloneProperties(staticData.guilds[teams[selectedTeamId].guildId].players[teamPlayerId], player);
+			teamGuildPlayers.push(player);
+		}
+	});
+	var sharedGuildPlayers = [];
+	Object.keys(staticData.guilds).forEach(function(guildId) {
+		if (guildId !== teams[selectedTeamId].guildId
+			&& staticData.guilds[guildId].hasOwnProperty('has_shareable_players')) {
+			Object.keys(staticData.guilds[guildId].players).forEach(function(playerId) {
+				if (staticData.guilds[guildId].players[playerId].hasOwnProperty('also_available_to')
+					&& staticData.guilds[guildId].players[playerId].also_available_to.indexOf(teams[selectedTeamId].guildId) >= 0
+					&& existingPlayerIdsInTeam.indexOf(staticData.guilds[guildId].players[playerId].id) < 0
+					&& (search.length === 0 || (staticData.guilds[guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+					var player = {
+						guild_id: guildId,
+						guild_image: staticData.guilds[guildId].image
+					};
+					cloneProperties(staticData.guilds[guildId].players[playerId], player);
+					sharedGuildPlayers.push(player);
+				}
+			});
+		}
+	});
+	var templateData = {
+		players: teamGuildPlayers
+	};
+	sharedGuildPlayers.forEach(function(sharedPlayer) {
+		templateData.players.push(sharedPlayer);
+	});
+	$('.content-items-list').empty().html(Mustache.render(staticData.templates.player_suggestions, templateData));
+	setContentScrollViewWrapperDimensions();
+	$('.content-items-list').find('.listing-block').tap(function() {
+		$('input').blur();
+		teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'));
+		teams[selectedTeamId].save(function() {
+			renderView('team_players', null);
+		});
+	});
 }
 
 function addEventsToRenderedView() {
@@ -327,7 +388,7 @@ function addEventsToRenderedView() {
 				$('input,select').blur();
 				teamPlayerLimit = parseInt(teamPlayerLimit, 10);
 				if (selectedTeamId === null) {
-					var newTeamId = generateUUID();
+					var newTeamId = generateUuid();
 					teams[newTeamId] = new Team();
 					teams[newTeamId].id = newTeamId;
 					teams[newTeamId].guildId = teamGuildId;
@@ -363,34 +424,15 @@ function addEventsToRenderedView() {
 				);
 			});
 			$('.content-items-list').find('.listing-block').tap(function() {
+				selectedGuildId = $(this).attr('data-guild-id');
 				renderView('player_cards', $(this).attr('data-player-id'));
 			});
 		break;
 		case 'team_add_player':
-			/*
-			search input
-				var existingPlayerIdsInTeam = teams[selectedTeamId].playerIds();
-				Object.keys(staticData.guilds).forEach(function(guildId) {
-				
-					if (guildId === teams[selectedTeamId].guildId
-						|| staticData.guilds[guildId].hasOwnProperty('has_shareable_players') // union
-					
-					staticData.guilds[guildId].image
-					
-					Object.keys(staticData.guilds[guildId].players).forEach(function(playerId) {
-						
-						
-						guildId !== teams[selectedTeamId].guildId
-						&& staticData.guilds[guildId].players[playerId].hasOwnProperty('also_available_to') && indexOf guildId // union
-						
-						staticData.guilds[guildId].players[playerId].name
-						
-					});
-				});
-				click events on search results
-					teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'))
-					renderView('team_players', null);
-			*/
+			populatePlayerSuggestions('');
+			$('#teamplayersearch').keyup(function() {
+				populatePlayerSuggestions($(this).val());
+			});
 		break;
 		case 'plots':
 			$('.content-items-list').find('a').tap(function() {
@@ -490,14 +532,18 @@ document.addEventListener('deviceready', function() {
 				renderView('guilds', null);
 			break;
 			case 'player_cards':
-				renderView('guild_players', selectedGuildId);
+				if ($('nav').find('a.active').attr('data-template-id') === 'teams') {
+					renderView('team_players', null);
+				} else {
+					renderView('guild_players', selectedGuildId);
+				}
 			break;
 			case 'team':
 			case 'team_players':
 				renderView('teams', null);
 			break;
 			case 'team_add_player':
-				renderView('teams', selectedTeamId);
+				renderView('team_players', null);
 			break;
 			case 'plot_card':
 				renderView('plots', null);

@@ -5,7 +5,7 @@
 			<li>
 				<div class="swipe-wrapper actions-1">
 					<a class="action-block action-1 delete" data-team-player-id="{{team_player_id}}"><span class="icon-wrapper"><span class="icon icon-trash"></span></span></a>
-					<a class="listing-block" data-player-id="{{player_id}}">
+					<a class="listing-block" data-guild-id="{{guild_id}}" data-player-id="{{id}}">
 						<span class="cell name">{{name}}</span>
 						<span class="cell type team-player">
 							{{#captain}}<span class="badge captain">CPT</span>{{/captain}}

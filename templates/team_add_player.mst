@@ -1,4 +1,10 @@
-<div class="horizontally-padded-wrapper">
-	<span class="subtitle">Add player to team</span>
-	<form><input id="teamplayersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off"></form>
-</div><ul class="content-items-list"></ul>
+<div class="content-view">
+	<div class="content-view-scroll-wrapper">
+		<div class="horizontally-padded-wrapper">
+			<form>
+				<input id="teamplayersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off">
+			</form>
+		</div>
+		<ul class="content-items-list"></ul>
+	</div>
+</div>

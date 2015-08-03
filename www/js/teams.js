@@ -31,14 +31,14 @@ function Team() {
 }
 
 Team.prototype.addPlayer = function(guildId, playerId) {
-	this.players[generateUUID()] = {
+	this.players[generateUuid()] = {
 		guildId: guildId,
 		playerId: playerId
 	};
 }
 
 Team.prototype.getPlayerName = function(teamPlayerId) {
-	return staticData.guilds[this.guildId].players[this.players[teamPlayerId].playerId].name;
+	return staticData.guilds[this.players[teamPlayerId].guildId].players[this.players[teamPlayerId].playerId].name;
 }
 
 Team.prototype.removePlayer = function(teamPlayerId) {
@@ -69,8 +69,8 @@ Team.prototype.delete = function(callback) {
 Team.prototype.playerIds = function() {
 	var playerIds = [];
 	Object.keys(this.players).forEach(function(teamPlayerId) {
-		players.push(this.players[teamPlayerId].playerId);
-	});
+		playerIds.push(this.players[teamPlayerId].playerId);
+	}, this);
 	return playerIds;
 }
 
@@ -78,12 +78,12 @@ Team.prototype.isComplete = function() {
 	var countCaptainsFound = 0;
 	var countMascotsFound = 0;
 	Object.keys(this.players).forEach(function(teamPlayerId) {
-		if (staticData.guilds[this.guildId].players[this.players[teamPlayerId].playerId].hasOwnProperty('captain')) {
+		if (staticData.guilds[this.players[teamPlayerId].guildId].players[this.players[teamPlayerId].playerId].hasOwnProperty('captain')) {
 			countCaptainsFound++;
 		}
-		if (staticData.guilds[this.guildId].players[this.players[teamPlayerId].playerId].hasOwnProperty('mascot')) {
+		if (staticData.guilds[this.players[teamPlayerId].guildId].players[this.players[teamPlayerId].playerId].hasOwnProperty('mascot')) {
 			countMascotsFound++;
 		}
-	});
+	}, this);
 	return (this.players.length <= this.playerLimit && countCaptainsFound === 1 && countMascotsFound === 1);
 }

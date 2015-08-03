@@ -1,6 +1,7 @@
 {{#players}}
 <li>
-	<a class="listing-block" data-player-id="{{id}}">
+	<a class="listing-block" data-guild-id="{{guild_id}}" data-player-id="{{id}}">
+		<span class="cell image"><img src="images/guilds/{{guild_image}}"></span>
 		<span class="cell name">{{name}}</span>
 		<span class="cell type">
 			{{#captain}}<span class="badge captain">CPT</span>{{/captain}}
