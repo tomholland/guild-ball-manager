@@ -108,7 +108,8 @@ function renderView(templateId, contentId) {
 				Object.keys(teams[selectedTeamId].players).forEach(function(teamPlayerId) {
 					var player = {
 						guild_id: teams[selectedTeamId].players[teamPlayerId].guildId,
-						team_player_id: teamPlayerId,
+						guild_image: staticData.guilds[teams[selectedTeamId].players[teamPlayerId].guildId].image,
+						team_player_id: teamPlayerId
 					};
 					cloneProperties(
 						staticData.guilds[teams[selectedTeamId].players[teamPlayerId].guildId].players[teams[selectedTeamId].players[teamPlayerId].playerId],
@@ -216,19 +217,20 @@ function setupSwipeableListing(parentalElement) {
 
 function populatePlayerSuggestions(search) {
 	var existingPlayerIdsInTeam = teams[selectedTeamId].playerIds();
-	var teamGuildPlayers = []
-	Object.keys(staticData.guilds[teams[selectedTeamId].guildId].players).forEach(function(teamPlayerId) {
-		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[teamPlayerId].playerId) < 0
-			&& (search.length === 0 || (staticData.guilds[teams[selectedTeamId].guildId].players[teamPlayerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+	var templateData = {
+		players: []
+	};
+	Object.keys(staticData.guilds[teams[selectedTeamId].guildId].players).forEach(function(playerId) {
+		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[playerId].id) < 0
+			&& (search.length === 0 || (staticData.guilds[teams[selectedTeamId].guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
 			var player = {
 				guild_id: teams[selectedTeamId].guildId,
 				guild_image: staticData.guilds[teams[selectedTeamId].guildId].image
 			};
-			cloneProperties(staticData.guilds[teams[selectedTeamId].guildId].players[teamPlayerId], player);
-			teamGuildPlayers.push(player);
+			cloneProperties(staticData.guilds[teams[selectedTeamId].guildId].players[playerId], player);
+			templateData.players.push(player);
 		}
 	});
-	var sharedGuildPlayers = [];
 	Object.keys(staticData.guilds).forEach(function(guildId) {
 		if (guildId !== teams[selectedTeamId].guildId
 			&& staticData.guilds[guildId].hasOwnProperty('has_shareable_players')) {
@@ -242,20 +244,15 @@ function populatePlayerSuggestions(search) {
 						guild_image: staticData.guilds[guildId].image
 					};
 					cloneProperties(staticData.guilds[guildId].players[playerId], player);
-					sharedGuildPlayers.push(player);
+					templateData.players.push(player);
 				}
 			});
 		}
 	});
-	var templateData = {
-		players: teamGuildPlayers
-	};
-	sharedGuildPlayers.forEach(function(sharedPlayer) {
-		templateData.players.push(sharedPlayer);
-	});
 	$('.content-items-list').empty().html(Mustache.render(staticData.templates.player_suggestions, templateData));
 	setContentScrollViewWrapperDimensions();
 	$('.content-items-list').find('.listing-block').tap(function() {
+	//$('.content-items-list').find('.listing-block').on('click', function() {
 		$('input').blur();
 		teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'));
 		teams[selectedTeamId].save(function() {
@@ -311,14 +308,15 @@ function addEventsToRenderedView() {
 					selectedTeamId = $(this).attr('data-team-id');
 					renderView('team', null);
 				} else if ($(this).hasClass('delete')) {
+					var teamId = $(this).attr('data-team-id');
 					navigator.notification.confirm(
-						'Are you sure you want to delete the team '+teams[selectedTeamId].name+'?',
+						'Are you sure you want to delete the team '+teams[teamId].name+'?',
 						function(button) {
 							if (button !== 2) {
 								return;
 							}
-							teams[selectedTeamId].delete(function() {
-								delete teams[selectedTeamId];
+							teams[teamId].delete(function() {
+								delete teams[teamId];
 								renderView('teams', null);
 							});
 						},
@@ -342,47 +340,39 @@ function addEventsToRenderedView() {
 				var teamPlayerLimit = $('#teamsize').val().trim();
 				if (selectedTeamId === null
 					&& Object.keys(staticData.guilds).indexOf(teamGuildId) < 0) {
-					/*
 					navigator.notification.alert(
 						'Please select a guild',
 						function() {
 							$('#teamguild').focus();
 						}
 					);
-					*/
 					return;
 				}
 				if (!teamName.length) {
-					/*
 					navigator.notification.alert(
 						'Please enter a team name',
 						function() {
 							$('#teamname').focus();
 						}
 					);
-					*/
 					return;
 				}
 				if (teamName.length > 28) {
-					/*
 					navigator.notification.alert(
 						'Team names are limited to 28 characters',
 						function() {
 							$('#teamname').focus();
 						}
 					);
-					*/
 					return;
 				}
 				if (!teamPlayerLimit.match(/^[0-9]{1,2}$/)) {
-					/*
 					navigator.notification.alert(
 						'Please enter a player limit between 0 and 99',
 						function() {
 							$('#teamsize').focus();
 						}
 					);
-					*/
 					return;
 				}
 				$('input,select').blur();
@@ -507,26 +497,26 @@ function addEventsToRenderedView() {
 		break;
 	}
 	
+	/*
 	$('.content').find('a').on('click', function() {
 		$(this).trigger('tap');
 	});
+	*/
 }
 
 document.addEventListener('deviceready', function() {
-	/*
 	Keyboard.automaticScrollToTopOnHiding = true;
 	Keyboard.shrinkView(false);
 	Keyboard.disableScrollingInShrinkView(true);
-	*/
 	
 	Object.keys(staticData.templates).forEach(function(templateId) {
-		Mustache.parse(staticData.templates[templateId]); // pre-parse for speed
+		Mustache.parse(staticData.templates[templateId]);
 	});
 	
 	contentViewWidth = $('.content').width();
 	
-	//$('#back').tap(function() {
-	$('#back').on('click', function() {
+	$('#back').tap(function() {
+	//$('#back').on('click', function() {
 		switch(currentTemplateId) {
 			case 'guild_players':
 				renderView('guilds', null);
@@ -558,8 +548,8 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
-	//$('#add').tap(function() {
-	$('#add').on('click', function() {
+	$('#add').tap(function() {
+	//$('#add').on('click', function() {
 		switch(currentTemplateId) {
 			case 'teams':
 				selectedTeamId = null;
@@ -571,8 +561,8 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
-	//$('nav').find('a').tap(function() {
-	$('nav').find('a').on('click', function() {
+	$('nav').find('a').tap(function() {
+	//$('nav').find('a').on('click', function() {
 		$('nav').find('a').removeClass('active');
 		renderView($(this).attr('data-template-id'), null);
 		$(this).addClass('active');
@@ -583,4 +573,4 @@ document.addEventListener('deviceready', function() {
 	
 }, false);
 
-$(document).trigger('deviceready');
+//$(document).trigger('deviceready');

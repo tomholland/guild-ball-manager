@@ -85,5 +85,5 @@ Team.prototype.isComplete = function() {
 			countMascotsFound++;
 		}
 	}, this);
-	return (this.players.length <= this.playerLimit && countCaptainsFound === 1 && countMascotsFound === 1);
+	return (Object.keys(this.players).length <= this.playerLimit && countCaptainsFound === 1 && countMascotsFound === 1);
 }
