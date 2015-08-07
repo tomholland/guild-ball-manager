@@ -90,6 +90,7 @@ function renderView(templateId, contentId) {
 		break;
 		case 'team':
 			$('#title').html(((selectedTeamId === null) ? 'Create':'Edit')+' team');
+			templateData.edit = (selectedTeamId !== null);
 			templateData.guilds = [];
 			Object.keys(staticData.guilds).forEach(function(guildId) {
 				templateData.guilds.push({
@@ -98,6 +99,8 @@ function renderView(templateId, contentId) {
 					selected: (selectedTeamId !== null && teams[selectedTeamId].guildId == guildId)
 				});
 			});
+			templateData.name = ((selectedTeamId !== null) ? teams[selectedTeamId].name:'');
+			templateData.size = ((selectedTeamId !== null) ? teams[selectedTeamId].playerLimit:'');
 			$('#back').addClass('shown');
 			$('#add').removeClass('shown');
 		break;
@@ -251,8 +254,8 @@ function populatePlayerSuggestions(search) {
 	});
 	$('.content-items-list').empty().html(Mustache.render(staticData.templates.player_suggestions, templateData));
 	setContentScrollViewWrapperDimensions();
-	$('.content-items-list').find('.listing-block').tap(function() {
-	//$('.content-items-list').find('.listing-block').on('click', function() {
+	//$('.content-items-list').find('.listing-block').tap(function() {
+	$('.content-items-list').find('.listing-block').on('click', function() {
 		$('input').blur();
 		teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'));
 		teams[selectedTeamId].save(function() {
@@ -397,7 +400,7 @@ function addEventsToRenderedView() {
 		case 'team_players':
 			setupSwipeableListing($('.content-items-list'));
 			$('.content-items-list').find('.action-block.delete').tap(function() {
-				var playerId = $(this).attr('data-team-player-id');
+				var teamPlayerId = $(this).attr('data-team-player-id');
 				navigator.notification.confirm(
 					'Are you sure you want to delete '+teams[selectedTeamId].getPlayerName(teamPlayerId)+' from your team "'+teams[selectedTeamId].name+'"?',
 					function(button) {
@@ -431,7 +434,7 @@ function addEventsToRenderedView() {
 		break;
 		case 'guides':
 			$('.content-items-list').find('a').tap(function() {
-				cordova.plugins.disusered.open(cordova.file.applicationDirectory+'www/'+$(this).attr('data-url'));
+				cordova.plugins.disusered.open(decodeURIComponent(cordova.file.applicationDirectory)+'www/'+$(this).attr('data-url'));
 			});
 		break;
 		case 'misc':
@@ -497,17 +500,17 @@ function addEventsToRenderedView() {
 		break;
 	}
 	
-	/*
 	$('.content').find('a').on('click', function() {
 		$(this).trigger('tap');
 	});
-	*/
 }
 
 document.addEventListener('deviceready', function() {
+	/*
 	Keyboard.automaticScrollToTopOnHiding = true;
 	Keyboard.shrinkView(false);
 	Keyboard.disableScrollingInShrinkView(true);
+	*/
 	
 	Object.keys(staticData.templates).forEach(function(templateId) {
 		Mustache.parse(staticData.templates[templateId]);
@@ -515,8 +518,8 @@ document.addEventListener('deviceready', function() {
 	
 	contentViewWidth = $('.content').width();
 	
-	$('#back').tap(function() {
-	//$('#back').on('click', function() {
+	//$('#back').tap(function() {
+	$('#back').on('click', function() {
 		switch(currentTemplateId) {
 			case 'guild_players':
 				renderView('guilds', null);
@@ -548,8 +551,8 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
-	$('#add').tap(function() {
-	//$('#add').on('click', function() {
+	//$('#add').tap(function() {
+	$('#add').on('click', function() {
 		switch(currentTemplateId) {
 			case 'teams':
 				selectedTeamId = null;
@@ -561,8 +564,8 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
-	$('nav').find('a').tap(function() {
-	//$('nav').find('a').on('click', function() {
+	//$('nav').find('a').tap(function() {
+	$('nav').find('a').on('click', function() {
 		$('nav').find('a').removeClass('active');
 		renderView($(this).attr('data-template-id'), null);
 		$(this).addClass('active');
@@ -573,4 +576,4 @@ document.addEventListener('deviceready', function() {
 	
 }, false);
 
-//$(document).trigger('deviceready');
+$(document).trigger('deviceready');
