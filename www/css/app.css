@@ -56,12 +56,6 @@
 	overflow: hidden;
 	position: absolute;
 	z-index: 1;
-	/*-webkit-transform: translateX(1536px);*/
-}
-
-.content-view.animataes-on-transform {
-	z-index: 2;
-	-webkit-transition: -webkit-transform .3s ease-in-out;
 }
 
 .content-view-scroll-wrapper {
@@ -129,13 +123,62 @@
 	width: 60px;
 }
 
-.content-items-list .listing-block .cell.player-count.team-player {
-	width: 85px;
-}
-
 .content-items-list .listing-block .cell.player-count .badge {
 	line-height: 1.1;
 	margin-bottom: 4px;
+}
+
+.content-items-list .listing-block .cell.type {
+	width: 100px;
+	text-align: right;
+}
+
+.content-items-list.alchemists .listing-block .cell.type .badge.captain,
+.content-items-list.alchemists .listing-block .cell.type .badge.mascot {
+	background: #599145;
+	color: #fff;
+}
+
+.content-items-list.brewers .listing-block .cell.type .badge.captain,
+.content-items-list.brewers .listing-block .cell.type .badge.mascot {
+	background: #d4b534;
+	color: #000;
+}
+
+.content-items-list.butchers .listing-block .cell.type .badge.captain,
+.content-items-list.butchers .listing-block .cell.type .badge.mascot {
+	background: #ce2229;
+	color: #fff;
+}
+
+.content-items-list.engineers .listing-block .cell.type .badge.captain,
+.content-items-list.engineers .listing-block .cell.type .badge.mascot {
+	background: #7a121b;
+	color: #fff;
+}
+
+.content-items-list.fishermen .listing-block .cell.type .badge.captain,
+.content-items-list.fishermen .listing-block .cell.type .badge.mascot {
+	background: #32aab7;
+	color: #fff;
+}
+
+.content-items-list.masons .listing-block .cell.type .badge.captain,
+.content-items-list.masons .listing-block .cell.type .badge.mascot {
+	background: #3370b6;
+	color: #fff;
+}
+
+.content-items-list.morticians .listing-block .cell.type .badge.captain,
+.content-items-list.morticians .listing-block .cell.type .badge.mascot {
+	background: #21242b;
+	color: #fff;
+}
+
+.content-items-list.union .listing-block .cell.type .badge.captain,
+.content-items-list.union .listing-block .cell.type .badge.mascot {
+	background: #642b7f;
+	color: #fff;
 }
 
 .badge.error {
@@ -178,16 +221,6 @@
 }
 
 /* Teams */
-
-.segmented-control .control-item.active {
-	color: #929292;
-	background: #fff;
-}
-
-.segmented-control .control-item.selected {
-	color: #fff;
-	background: #929292;
-}
 
 .content-items-list .swipe-wrapper {
 	transition: -webkit-transform .2s ease-in-out;
@@ -257,31 +290,8 @@ input[type=search] {
 	text-align: left;
 }
 
-.horizontally-padded-wrapper {
-	margin: 0 10px;
-}
-
-.subtitle {
-	display: block;
-	margin: 10px 0 15px 0;
-	text-align: center;
-}
-
 .field-topping-content-view {
-	margin-top: 10px;
-}
-
-.list-preamble {
-	display: block;
-	margin-bottom: 10px;
-	border-top: 1px solid #c8c7cc;
-	padding-top: 6px;
-	text-align: center;
-	visibility: hidden;
-}
-
-.list-preamble.shown {
-	visibility: visible;
+	margin: 10px 10px 0 10px;
 }
 
 .listing-block .cell.icon.large {
@@ -293,12 +303,6 @@ input[type=search] {
 	border-radius: 3px;
 	padding: 2px;
 	color: #fff;
-}
-
-/* Plots */
-
-#plots {
-	padding-top: 6px;
 }
 
 /* Settings */

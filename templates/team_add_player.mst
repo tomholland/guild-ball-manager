@@ -1,6 +1,6 @@
 <div class="content-view">
 	<div class="content-view-scroll-wrapper">
-		<div class="horizontally-padded-wrapper">
+		<div class="field-topping-content-view">
 			<form>
 				<input id="teamplayersearch" type="search" placeholder="Search" autocorrect="off" autocapitalize="off">
 			</form>

@@ -1,7 +1,8 @@
-{{team}}
+{{{team_name}}}
+{{{guild_name}}}
 
 {{#players}}
-* {{name}}{{#captain.length}} (captain){{/captain.length}}{{#mascot.length}} (mascot){{/mascot.length}}
+- {{{name}}}{{#captain}} (captain){{/captain}}{{#mascot}} (mascot){{/mascot}}
 {{/players}}
 
 Created with Guild Ball Manager for iOS:

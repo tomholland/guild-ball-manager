@@ -107,6 +107,7 @@ function renderView(templateId, contentId) {
 		case 'team_players':
 			loadTeams(function() {
 				$('#title').html(htmlEncode(teams[selectedTeamId].name));
+				templateData.guild_class = staticData.guilds[teams[selectedTeamId].guildId].name.toLowerCase();
 				templateData.players = [];
 				Object.keys(teams[selectedTeamId].players).forEach(function(teamPlayerId) {
 					var player = {
@@ -254,9 +255,8 @@ function populatePlayerSuggestions(search) {
 	});
 	$('.content-items-list').empty().html(Mustache.render(staticData.templates.player_suggestions, templateData));
 	setContentScrollViewWrapperDimensions();
-	//$('.content-items-list').find('.listing-block').tap(function() {
-	$('.content-items-list').find('.listing-block').on('click', function() {
-		$('input').blur();
+	$('.content-items-list').find('.listing-block').tap(function() {
+		$('#teamplayersearch').blur();
 		teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'));
 		teams[selectedTeamId].save(function() {
 			renderView('team_players', null);
@@ -284,21 +284,24 @@ function addEventsToRenderedView() {
 					var params = {
 						'subject': 'Guild Ball team: '+teams[teamId].name,
 						'onSuccess': function() {
-							$('#teams').find('.swipe-wrapper.offset').removeClass('offset');
+							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
 						},
 						'onError': function() {
-							$('#teams').find('.swipe-wrapper.offset').removeClass('offset');
+							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
 						}
 					};
 					var emailTemplateData = {
 						guild_name: staticData.guilds[teams[teamId].guildId].name,
-						name: teams[teamId].name,
+						team_name: teams[teamId].name,
 						players: []
 					};
 					Object.keys(teams[teamId].players).forEach(function(teamPlayerId) {
 						emailTemplateData.players.push(staticData.guilds[teams[teamId].players[teamPlayerId].guildId].players[teams[teamId].players[teamPlayerId].playerId]);
 					});
 					loadSettings(function() {
+						if (settingIsEnabled('lexicographicalsort')) {
+							emailTemplateData.players.sort(sortObjectArrayByNameProperty);
+						}
 						if (settingIsEnabled('htmlemailsetting')) {
 							params.body = Mustache.render(staticData.templates.team_email_html, emailTemplateData);
 							params.isHtml = true;
@@ -426,6 +429,9 @@ function addEventsToRenderedView() {
 			$('#teamplayersearch').keyup(function() {
 				populatePlayerSuggestions($(this).val());
 			});
+			$('.content-view').find('form').on('submit', function(e) {
+				e.preventDefault();
+			});
 		break;
 		case 'plots':
 			$('.content-items-list').find('a').tap(function() {
@@ -499,18 +505,12 @@ function addEventsToRenderedView() {
 			});
 		break;
 	}
-	
-	$('.content').find('a').on('click', function() {
-		$(this).trigger('tap');
-	});
 }
 
 document.addEventListener('deviceready', function() {
-	/*
 	Keyboard.automaticScrollToTopOnHiding = true;
 	Keyboard.shrinkView(false);
 	Keyboard.disableScrollingInShrinkView(true);
-	*/
 	
 	Object.keys(staticData.templates).forEach(function(templateId) {
 		Mustache.parse(staticData.templates[templateId]);
@@ -518,8 +518,8 @@ document.addEventListener('deviceready', function() {
 	
 	contentViewWidth = $('.content').width();
 	
-	//$('#back').tap(function() {
-	$('#back').on('click', function() {
+	$('#back').tap(function() {
+		$('input,select').blur();
 		switch(currentTemplateId) {
 			case 'guild_players':
 				renderView('guilds', null);
@@ -551,8 +551,7 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
-	//$('#add').tap(function() {
-	$('#add').on('click', function() {
+	$('#add').tap(function() {
 		switch(currentTemplateId) {
 			case 'teams':
 				selectedTeamId = null;
@@ -564,8 +563,7 @@ document.addEventListener('deviceready', function() {
 		}
 	});
 	
-	//$('nav').find('a').tap(function() {
-	$('nav').find('a').on('click', function() {
+	$('nav').find('a').tap(function() {
 		$('nav').find('a').removeClass('active');
 		renderView($(this).attr('data-template-id'), null);
 		$(this).addClass('active');
@@ -575,5 +573,3 @@ document.addEventListener('deviceready', function() {
 	$('nav').find('[data-template-id=guilds]').addClass('active');
 	
 }, false);
-
-$(document).trigger('deviceready');

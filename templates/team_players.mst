@@ -1,6 +1,6 @@
 <div class="content-view">
 	<div class="content-view-scroll-wrapper">
-		<ul class="content-items-list">
+		<ul class="content-items-list {{guild_class}}">
 			{{#players}}
 			<li>
 				<div class="swipe-wrapper actions-1">

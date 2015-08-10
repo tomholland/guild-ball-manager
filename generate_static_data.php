@@ -230,11 +230,11 @@ $data = array(
 					)
 				),
 				'D45B4126-8223-AA48-7ABF-F0037E3BC22A' => array(
-					'name' => 'Ratchett',
+					'name' => 'Ratchet',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Ratchett_CardFront.jpg',
-						'Ratchett_CardBack.jpg'
+						'Ratchet_CardFront.jpg',
+						'Ratchet_CardBack.jpg'
 					)
 				)
 			)
