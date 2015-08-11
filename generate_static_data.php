@@ -634,7 +634,11 @@ $data = array(
 		'EB6C4BD2-9039-2D4B-4581-82E3C85816D5' => array(
 			'name' => 'Rulebook (Season 1)',
 			'filename' => 'GuildBall_Season01.pdf'
-		)
+		),
+		'93656EA7-EAC7-15E5-815D-D551A5BC6164' => array(
+			'name' => 'Quick Start Rules',
+			'filename' => 'GuildBall-QuickStart.pdf'
+		),
 	),
 	'settings' => array(
 		'htmlemailsetting' => array(

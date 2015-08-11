@@ -134,49 +134,65 @@
 }
 
 .content-items-list.alchemists .listing-block .cell.type .badge.captain,
-.content-items-list.alchemists .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.alchemists .cell.type .badge.captain,
+.content-items-list.alchemists .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.alchemists .cell.type .badge.mascot {
 	background: #599145;
 	color: #fff;
 }
 
 .content-items-list.brewers .listing-block .cell.type .badge.captain,
-.content-items-list.brewers .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.brewers .cell.type .badge.captain,
+.content-items-list.brewers .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.brewers .cell.type .badge.mascot {
 	background: #d4b534;
 	color: #000;
 }
 
 .content-items-list.butchers .listing-block .cell.type .badge.captain,
-.content-items-list.butchers .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.butchers .cell.type .badge.captain,
+.content-items-list.butchers .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.butchers .cell.type .badge.mascot {
 	background: #ce2229;
 	color: #fff;
 }
 
 .content-items-list.engineers .listing-block .cell.type .badge.captain,
-.content-items-list.engineers .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.engineers .cell.type .badge.captain,
+.content-items-list.engineers .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.engineers .cell.type .badge.mascot {
 	background: #7a121b;
 	color: #fff;
 }
 
 .content-items-list.fishermen .listing-block .cell.type .badge.captain,
-.content-items-list.fishermen .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.fishermen .cell.type .badge.captain,
+.content-items-list.fishermen .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.fishermen .cell.type .badge.mascot {
 	background: #32aab7;
 	color: #fff;
 }
 
 .content-items-list.masons .listing-block .cell.type .badge.captain,
-.content-items-list.masons .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.masons .cell.type .badge.captain,
+.content-items-list.masons .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.masons .cell.type .badge.mascot {
 	background: #3370b6;
 	color: #fff;
 }
 
 .content-items-list.morticians .listing-block .cell.type .badge.captain,
-.content-items-list.morticians .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.morticians .cell.type .badge.captain,
+.content-items-list.morticians .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.morticians .cell.type .badge.mascot {
 	background: #21242b;
 	color: #fff;
 }
 
 .content-items-list.union .listing-block .cell.type .badge.captain,
-.content-items-list.union .listing-block .cell.type .badge.mascot {
+.content-items-list .listing-block.union .cell.type .badge.captain,
+.content-items-list.union .listing-block .cell.type .badge.mascot,
+.content-items-list .listing-block.union .cell.type .badge.mascot {
 	background: #642b7f;
 	color: #fff;
 }

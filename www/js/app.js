@@ -44,6 +44,7 @@ function renderView(templateId, contentId) {
 		case 'guild_players':
 			selectedGuildId = contentId;
 			$('#title').html(htmlEncode(staticData.guilds[contentId].name));
+			templateData.guild_class = staticData.guilds[contentId].name.toLowerCase();
 			templateData.players = [];
 			Object.keys(staticData.guilds[contentId].players).forEach(function(playerId) {
 				templateData.players.push(staticData.guilds[contentId].players[playerId]);
@@ -228,6 +229,7 @@ function populatePlayerSuggestions(search) {
 		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[playerId].id) < 0
 			&& (search.length === 0 || (staticData.guilds[teams[selectedTeamId].guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
 			var player = {
+				guild_class: staticData.guilds[teams[selectedTeamId].guildId].name.toLowerCase(),
 				guild_id: teams[selectedTeamId].guildId,
 				guild_image: staticData.guilds[teams[selectedTeamId].guildId].image
 			};
@@ -244,6 +246,7 @@ function populatePlayerSuggestions(search) {
 					&& existingPlayerIdsInTeam.indexOf(staticData.guilds[guildId].players[playerId].id) < 0
 					&& (search.length === 0 || (staticData.guilds[guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
 					var player = {
+						guild_class: staticData.guilds[guildId].name.toLowerCase(),
 						guild_id: guildId,
 						guild_image: staticData.guilds[guildId].image
 					};
