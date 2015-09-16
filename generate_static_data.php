@@ -794,4 +794,4 @@ uasort(
 	}
 );
 
-file_put_contents('static-data.js', 'var staticData = '.json_encode($data).';');
+echo json_encode($data);

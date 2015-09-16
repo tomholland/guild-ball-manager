@@ -1,3 +1,4 @@
+var staticData = null;
 var contentViewWidth = 0;
 var currentTemplateId = null;
 var selectedGuildId = null;
@@ -377,7 +378,18 @@ function addEventsToRenderedView() {
 				}
 				if (!teamPlayerLimit.match(/^[0-9]{1,2}$/)) {
 					navigator.notification.alert(
-						'Please enter a player limit between 0 and 99',
+						'Please enter a player limit between 3 and 10',
+						function() {
+							$('#teamsize').focus();
+						}
+					);
+					return;
+				}
+				teamPlayerLimit = parseInt(teamPlayerLimit, 10);
+				if (teamPlayerLimit < 3
+					|| teamPlayerLimit > 10) {
+					navigator.notification.alert(
+						'Please enter a player limit between 3 and 10',
 						function() {
 							$('#teamsize').focus();
 						}
@@ -385,7 +397,6 @@ function addEventsToRenderedView() {
 					return;
 				}
 				$('input,select').blur();
-				teamPlayerLimit = parseInt(teamPlayerLimit, 10);
 				if (selectedTeamId === null) {
 					var newTeamId = generateUuid();
 					teams[newTeamId] = new Team();
@@ -515,10 +526,6 @@ document.addEventListener('deviceready', function() {
 	Keyboard.shrinkView(false);
 	Keyboard.disableScrollingInShrinkView(true);
 	
-	Object.keys(staticData.templates).forEach(function(templateId) {
-		Mustache.parse(staticData.templates[templateId]);
-	});
-	
 	contentViewWidth = $('.content').width();
 	
 	$('#back').tap(function() {
@@ -572,7 +579,12 @@ document.addEventListener('deviceready', function() {
 		$(this).addClass('active');
 	});
 	
-	renderView('guilds', null);
-	$('nav').find('[data-template-id=guilds]').addClass('active');
+	$.getJSON('js/static-data.json', function(json) {
+		staticData = json;
+		Object.keys(staticData.templates).forEach(function(templateId) {
+			Mustache.parse(staticData.templates[templateId]);
+		});
+		$('nav').find('[data-template-id=guilds]').trigger('tap');
+	});
 	
 }, false);
