@@ -243,6 +243,14 @@ $data = array(
 			'name' => 'Fishermen',
 			'image' => 'Fishermen.png',
 			'players' => array(
+				'6A365CA6-E974-8988-ABEC-E996511F05A9' => array(
+					'name' => 'Sakana',
+					'striker' => true,
+					'cards' => array(
+						'Sakana_CardFront.jpg',
+						'Sakana_CardBack.jpg'
+					)
+				),
 				'FEF4B740-D8AF-15ED-6CD1-CF9B2B92482A' => array(
 					'name' => 'Shark',
 					'captain' => true,
@@ -433,6 +441,14 @@ $data = array(
 			'image' => 'Union.png',
 			'has_shareable_players' => true,
 			'players' => array(
+				'B154A6EB-91BE-0165-51A3-2F9CF840390F' => array(
+					'name' => 'Harry ‘The Hat’ Hallahan',
+					'attacking_midfielder' => true,
+					'cards' => array(
+						'Harry_CardFront.jpg',
+						'Harry_CardBack.jpg'
+					)
+				),
 				'10EAEEBC-E1F9-4554-8C7C-D15E4234A084' => array(
 					'name' => 'Blackheart',
 					'captain' => true,
@@ -582,7 +598,7 @@ $data = array(
 	),
 	'plots' => array(
 		'D1B22271-174F-C99E-4211-429CFAE86D01' => array(
-			'name' => 'Don\'t Touch the Hair',
+			'name' => 'Don’t Touch the Hair!',
 			'card' => 'donttouchthehair.jpg'
 		),
 		'29251012-7EF0-387B-E09C-A24B65D4C2B3' => array(
@@ -590,11 +606,11 @@ $data = array(
 			'card' => 'keepball.jpg'
 		),
 		'287EB9F1-0FF1-FB29-35C1-762A97E74A9A' => array(
-			'name' => 'Knee slider',
+			'name' => 'Knee slider!',
 			'card' => 'kneeslider.jpg'
 		),
 		'D614924D-75A8-DDE1-F889-D3D5A54EFD7D' => array(
-			'name' => 'Make a Game of It',
+			'name' => 'Make a Game of It!',
 			'card' => 'makeagameofit.jpg'
 		),
 		'73C9EA5F-B2B8-1A77-9E4E-B5946759B233' => array(

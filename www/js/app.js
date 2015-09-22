@@ -221,14 +221,13 @@ function setupSwipeableListing(parentalElement) {
 	parentalElement.find('.action-3').css('margin-left', (contentViewWidth + (actionBlockWidth * 2))+'px');
 }
 
-function populatePlayerSuggestions(search) {
+function populatePlayerSuggestions() {
 	var existingPlayerIdsInTeam = teams[selectedTeamId].playerIds();
 	var templateData = {
 		players: []
 	};
 	Object.keys(staticData.guilds[teams[selectedTeamId].guildId].players).forEach(function(playerId) {
-		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[playerId].id) < 0
-			&& (search.length === 0 || (staticData.guilds[teams[selectedTeamId].guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+		if (existingPlayerIdsInTeam.indexOf(staticData.guilds[teams[selectedTeamId].guildId].players[playerId].id) < 0) {
 			var player = {
 				guild_class: staticData.guilds[teams[selectedTeamId].guildId].name.toLowerCase(),
 				guild_id: teams[selectedTeamId].guildId,
@@ -244,8 +243,7 @@ function populatePlayerSuggestions(search) {
 			Object.keys(staticData.guilds[guildId].players).forEach(function(playerId) {
 				if (staticData.guilds[guildId].players[playerId].hasOwnProperty('also_available_to')
 					&& staticData.guilds[guildId].players[playerId].also_available_to.indexOf(teams[selectedTeamId].guildId) >= 0
-					&& existingPlayerIdsInTeam.indexOf(staticData.guilds[guildId].players[playerId].id) < 0
-					&& (search.length === 0 || (staticData.guilds[guildId].players[playerId].name.toLowerCase()).indexOf(search.toLowerCase()) >= 0)) {
+					&& existingPlayerIdsInTeam.indexOf(staticData.guilds[guildId].players[playerId].id) < 0) {
 					var player = {
 						guild_class: staticData.guilds[guildId].name.toLowerCase(),
 						guild_id: guildId,
@@ -260,7 +258,6 @@ function populatePlayerSuggestions(search) {
 	$('.content-items-list').empty().html(Mustache.render(staticData.templates.player_suggestions, templateData));
 	setContentScrollViewWrapperDimensions();
 	$('.content-items-list').find('.listing-block').tap(function() {
-		$('#teamplayersearch').blur();
 		teams[selectedTeamId].addPlayer($(this).attr('data-guild-id'), $(this).attr('data-player-id'));
 		teams[selectedTeamId].save(function() {
 			renderView('team_players', null);
@@ -439,10 +436,7 @@ function addEventsToRenderedView() {
 			});
 		break;
 		case 'team_add_player':
-			populatePlayerSuggestions('');
-			$('#teamplayersearch').keyup(function() {
-				populatePlayerSuggestions($(this).val());
-			});
+			populatePlayerSuggestions();
 			$('.content-view').find('form').on('submit', function(e) {
 				e.preventDefault();
 			});

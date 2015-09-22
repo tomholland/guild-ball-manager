@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="uk.tomholland.guildballmanager" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="uk.tomholland.guildballmanager" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Guild Ball Manager</name>
     <description>Unofficial Guild Ball Manager app for iOS</description>
     <author email="guildballmanager@gmail.com" href="https://twitter.com/guildballmngr">Guild Ball Manager app support</author>
