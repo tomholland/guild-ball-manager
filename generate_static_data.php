@@ -444,6 +444,12 @@ $data = array(
 				'B154A6EB-91BE-0165-51A3-2F9CF840390F' => array(
 					'name' => 'Harry ‘The Hat’ Hallahan',
 					'attacking_midfielder' => true,
+					'also_available_to' => array(
+						'CE246AC8-6C86-C6AB-F783-939439025B2E',
+						'44558F89-EA8B-4CCC-0F1F-F7C1EAC8838D',
+						'5F774C3B-2FD2-E2E5-AAF0-E4AD665036E4',
+						'C4EB7FDC-22CC-3A38-5966-4BD3BC160D83'
+					),
 					'cards' => array(
 						'Harry_CardFront.jpg',
 						'Harry_CardBack.jpg'
