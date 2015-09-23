@@ -202,6 +202,7 @@ function renderTemplate(templateId, templateData) {
 	$('.content').empty().html(Mustache.render(staticData.templates[templateId], templateData));
 	setContentScrollViewWrapperDimensions();
 	currentTemplateId = templateId;
+	window.plugin.statusbarOverlay.hide();
 	addEventsToRenderedView();
 }
 
