@@ -284,13 +284,7 @@ function addEventsToRenderedView() {
 				if ($(this).hasClass('share')) {
 					var teamId = $(this).attr('data-team-id');
 					var params = {
-						'subject': 'Guild Ball team: '+teams[teamId].name,
-						'onSuccess': function() {
-							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
-						},
-						'onError': function() {
-							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
-						}
+						'subject': 'Guild Ball team: '+teams[teamId].name
 					};
 					var emailTemplateData = {
 						guild_name: staticData.guilds[teams[teamId].guildId].name,
@@ -306,12 +300,15 @@ function addEventsToRenderedView() {
 						}
 						if (settingIsEnabled('htmlemailsetting')) {
 							params.body = Mustache.render(staticData.templates.team_email_html, emailTemplateData);
-							params.isHtml = true;
+							params.isHTML = true;
 						} else {
 							params.body = Mustache.render(staticData.templates.team_email_txt, emailTemplateData);
+							params.isHTML = false;
 						}
-						cordova.require('emailcomposer.EmailComposer').show(params);
-					});					
+						cordova.plugins.email.open(params, function() {
+							$('.content-items-list').find('.swipe-wrapper.offset').removeClass('offset');
+						});
+					});
 				} else if ($(this).hasClass('edit')) {
 					selectedTeamId = $(this).attr('data-team-id');
 					renderView('team', null);
@@ -479,9 +476,10 @@ function addEventsToRenderedView() {
 				window.open(encodeURI($(this).attr('data-url')), '_system');
 			});
 			$('.content-view').find('a.email').tap(function() {
-				cordova.require('emailcomposer.EmailComposer').show({
+				cordova.plugins.email.open({
 					to: $(this).attr('data-email'),
-					subject: $(this).attr('data-subject')
+					subject: $(this).attr('data-subject'),
+					isHTML: false
 				});
 			});
 			$('.content-view').find('a.twitter').tap(function() {
