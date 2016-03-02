@@ -647,7 +647,7 @@ $data = array(
 					)
 				),
 				'E9E25392-480E-DE11-E6CB-5719832E2178' => array(
-					'name' => 'Rage (S1)',
+					'name' => 'Rage',
 					'attacking_midfielder' => true,
 					'also_available_to' => array(
 						'44558F89-EA8B-4CCC-0F1F-F7C1EAC8838D',
@@ -661,7 +661,7 @@ $data = array(
 					)
 				),
 				'FF8623B1-3E92-AA95-1C94-7BB043943130' => array(
-					'name' => 'Rage (S2)',
+					'name' => 'Rage (Vet)',
 					'attacking_midfielder' => true,
 					'captain' => true,
 					'cards' => array(
