@@ -12,6 +12,7 @@
 			{{#attacking_midfielder}}<span class="badge attacking-midfielder">AMF</span>{{/attacking_midfielder}}
 			{{#central_midfielder}}<span class="badge central-midfielder">CMF</span>{{/central_midfielder}}
 			{{#centre_back}}<span class="badge centre-back">CBK</span>{{/centre_back}}
+			{{#goalkeeper}}<span class="badge goalkeeper">GK</span>{{/goalkeeper}}
 		</span>
 		<span class="cell icon large"><span class="icon icon-plus"></span></span>
 	</a>

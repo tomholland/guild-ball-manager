@@ -6,54 +6,74 @@ $data = array(
 		'CE246AC8-6C86-C6AB-F783-939439025B2E' => array(
 			'name' => 'Alchemists',
 			'image' => 'Alchemists.png',
+			'has_shareable_players' => true,
 			'players' => array(
+				'54EA6696-940A-F205-BA46-4DF859C483DC' => array(
+					'name' => 'Venin',
+					'attacking_midfielder' => true,
+					'cards' => array(
+						'Venin-1.jpg',
+						'Venin-2.jpg'
+					)
+				),
+				'34AF157A-BBD3-A67C-5E07-71A5369F5877' => array(
+					'name' => 'Compound',
+					'goalkeeper' => true,
+					'also_available_to' => array(
+						'C4EB7FDC-22CC-3A38-5966-4BD3BC160D83'
+					),
+					'cards' => array(
+						'Compound-1.jpg',
+						'Compound-2.jpg'
+					)
+				),
 				'7300FAFC-6A43-BF5B-F0DC-CEFD96BA1347' => array(
 					'name' => 'Midas',
 					'captain' => true,
 					'central_midfielder' => true,
 					'cards' => array(
-						'Midas_CardFront.jpg',
-						'Midas_CardBack.jpg'
+						'Midas-1.jpg',
+						'Midas-2.jpg'
 					)
 				),
 				'FF94EB80-0E1E-659E-ED69-2D587A355070' => array(
 					'name' => 'Flask',
 					'mascot' => true,
 					'cards' => array(
-						'Flask_CardFront.jpg',
-						'Flask_CardBack.jpg'
+						'Flask-1.jpg',
+						'Flask-2.jpg'
 					)
 				),
 				'79A5A80B-4301-C727-FFF2-BA249BA6BC2A' => array(
 					'name' => 'Calculus',
 					'central_midfielder' => true,
 					'cards' => array(
-						'Calculus_CardFront.jpg',
-						'Calculus_CardBack.jpg'
+						'Calculus-1.jpg',
+						'Calculus-2.jpg'
 					)
 				),
 				'8AA347E4-9FF1-FEF9-DA4C-1BBC4F29B2AD' => array(
 					'name' => 'Mercury',
 					'central_midfielder' => true,
 					'cards' => array(
-						'Mercury_CardFront.jpg',
-						'Mercury_CardBack.jpg'
+						'Mercury-1.jpg',
+						'Mercury-2.jpg'
 					)
 				),
 				'F5569A12-B240-100B-9993-C4B8F429B874' => array(
 					'name' => 'Katalyst',
 					'attacking_midfielder' => true,
 					'cards' => array(
-						'Katalyst_CardFront.jpg',
-						'Katalyst_CardBack.jpg'
+						'Katalyst-1.jpg',
+						'Katalyst-2.jpg'
 					)
 				),
 				'238E6D9C-C8AF-3ED5-5699-94265F29E521' => array(
 					'name' => 'Vitriol',
 					'striker' => true,
 					'cards' => array(
-						'Vitriol_CardFront.jpg',
-						'Vitriol_CardBack.jpg'
+						'Vitriol-1.jpg',
+						'Vitriol-2.jpg'
 					)
 				)
 			)
@@ -62,61 +82,78 @@ $data = array(
 			'name' => 'Brewers',
 			'image' => 'Brewers.png',
 			'players' => array(
+				'10A7B723-FA31-F72E-4DD6-035549590A31' => array(
+					'name' => 'Esters',
+					'captain' => true,
+					'central_midfielder' => true,
+					'cards' => array(
+						'Esters-1.jpg',
+						'Esters-2.jpg'
+					)
+				),
+				'4022C981-48E2-968B-E0CB-CA430B3F8914' => array(
+					'name' => 'Mash',
+					'striker' => true,
+					'cards' => array(
+						'Mash-1.jpg',
+						'Mash-2.jpg'
+					)
+				),
 				'BC46BC59-1399-91D0-07C6-08FC7A7D0D2A' => array(
 					'name' => 'Tapper',
 					'captain' => true,
 					'central_midfielder' => true,
 					'cards' => array(
-						'Tapper_CardFront.jpg',
-						'Tapper_CardBack.jpg'
+						'Tapper-1.jpg',
+						'Tapper-2.jpg'
 					)
 				),
 				'8AB41303-5C71-F643-0B5A-3C4444330589' => array(
 					'name' => 'Scum',
 					'mascot' => true,
 					'cards' => array(
-						'Scum_CardFront.jpg',
-						'Scum_CardBack.jpg'
+						'Scum-1.jpg',
+						'Scum-2.jpg'
 					)
 				),
 				'B2C8357B-CC8A-A635-65BE-0943FDA86E72' => array(
 					'name' => 'Hooper',
 					'attacking_midfielder' => true,
 					'cards' => array(
-						'Hooper_CardFront.jpg',
-						'Hooper_CardBack.jpg'
+						'Hooper-1.jpg',
+						'Hooper-2.jpg'
 					)
 				),
 				'4D6F70A5-EE83-E62C-371C-8F9B4A3A355A' => array(
 					'name' => 'Friday',
 					'striker' => true,
 					'cards' => array(
-						'Friday_CardFront.jpg',
-						'Friday_CardBack.jpg'
+						'Friday-1.jpg',
+						'Friday-2.jpg'
 					)
 				),
 				'635A5B7C-EDE4-CF42-A974-0277E64A40AF' => array(
 					'name' => 'Spigot',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Spigot_CardFront.jpg',
-						'Spigot_CardBack.jpg'
+						'Spigot-1.jpg',
+						'Spigot-2.jpg'
 					)
 				),
 				'0E2B876B-BB7C-A6DA-771B-AA10F716FD33' => array(
 					'name' => 'Stave',
 					'centre_back' => true,
 					'cards' => array(
-						'Stave_CardFront.jpg',
-						'Stave_CardBack.jpg'
+						'Stave-1.jpg',
+						'Stave-2.jpg'
 					)
 				),
 				'0C8490BC-B8BD-AE78-E4E6-67E792E99F8F' => array(
 					'name' => 'Stoker',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Stoker_CardFront.jpg',
-						'Stoker_CardBack.jpg'
+						'Stoker-1.jpg',
+						'Stoker-2.jpg'
 					)
 				)
 			)
@@ -125,61 +162,69 @@ $data = array(
 			'name' => 'Butchers',
 			'image' => 'Butchers.png',
 			'players' => array(
+				'2D927BA0-0550-BF63-4A3D-6C77A5C71350' => array(
+					'name' => 'Tenderiser',
+					'goalkeeper' => true,
+					'cards' => array(
+						'Tenderiser-1.jpg',
+						'Tenderiser-2.jpg'
+					)
+				),
 				'DD1AF826-F4F6-EECE-BE12-392D0DC92C79' => array(
 					'name' => 'Ox',
 					'captain' => true,
 					'attacking_midfielder' => true,
 					'cards' => array(
-						'Ox_CardFront.jpg',
-						'Ox_CardBack.jpg'
+						'Ox-1.jpg',
+						'Ox-2.jpg'
 					)
 				),
 				'5DEEE3B4-8E11-F1AE-88D7-69E165722B97' => array(
 					'name' => 'Princess',
 					'mascot' => true,
 					'cards' => array(
-						'Princess_CardFront.jpg',
-						'Princess_CardBack.jpg'
+						'Princess-1.jpg',
+						'Princess-2.jpg'
 					)
 				),
 				'0FB8BD79-C9A5-6635-044A-C73E1976199B' => array(
 					'name' => 'Brisket',
 					'striker' => true,
 					'cards' => array(
-						'Brisket_CardFront.jpg',
-						'Brisket_CardBack.jpg'
+						'Brisket-1.jpg',
+						'Brisket-2.jpg'
 					)
 				),
 				'BBB90175-F6D8-AA52-880C-C243A1BEBB9F' => array(
 					'name' => 'Boiler',
 					'winger' => true,
 					'cards' => array(
-						'Boiler_CardFront.jpg',
-						'Boiler_CardBack.jpg'
+						'Boiler-1.jpg',
+						'Boiler-2.jpg'
 					)
 				),
 				'9ABD3621-DEE4-3917-88E4-C1332AA1CBE6' => array(
 					'name' => 'Boar',
 					'attacking_midfielder' => true,
 					'cards' => array(
-						'Boar_CardFront.jpg',
-						'Boar_CardBack.jpg'
+						'Boar-1.jpg',
+						'Boar-2.jpg'
 					)
 				),
 				'7A9B964F-62A1-0DCC-ACCF-D46072F3A1A4' => array(
 					'name' => 'Meathook',
 					'attacking_midfielder' => true,
 					'cards' => array(
-						'Meathook_CardFront.jpg',
-						'Meathook_CardBack.jpg'
+						'Meathook-1.jpg',
+						'Meathook-2.jpg'
 					)
 				),
 				'BF516B6B-01C3-1F64-7F98-943E3ECE2652' => array(
 					'name' => 'Shank',
 					'winger' => true,
 					'cards' => array(
-						'Shank_CardFront.jpg',
-						'Shank_CardBack.jpg'
+						'Shank-1.jpg',
+						'Shank-2.jpg'
 					)
 				)
 			)
@@ -188,53 +233,70 @@ $data = array(
 			'name' => 'Engineers',
 			'image' => 'Engineers.png',
 			'players' => array(
+				'E5BB2AA3-5595-9548-6F3C-34F7D56B31EB' => array(
+					'name' => 'Hoist',
+					'attacking_midfielder' => true,
+					'cards' => array(
+						'Hoist-1.jpg',
+						'Hoist-2.jpg'
+					)
+				),
+				'DC2003E1-92CC-7A7E-158F-E0159E60D925' => array(
+					'name' => 'Pin Vice',
+					'captain' => true,
+					'striker' => true,
+					'cards' => array(
+						'Pin-Vice-1.jpg',
+						'Pin-Vice-2.jpg'
+					)
+				),
 				'94F516C2-EB35-6A02-6B37-93D0D497357E' => array(
 					'name' => 'Ballista',
 					'captain' => true,
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Ballista_CardFront.jpg',
-						'Ballista_CardBack.jpg'
+						'Ballista-1.jpg',
+						'Ballista-2.jpg'
 					)
 				),
 				'9F3AF725-BED5-D3EB-5203-86B74AE35E63' => array(
 					'name' => 'Mainspring',
 					'mascot' => true,
 					'cards' => array(
-						'Mainspring_CardFront.jpg',
-						'Mainspring_CardBack.jpg'
+						'Mainspring-1.jpg',
+						'Mainspring-2.jpg'
 					)
 				),
 				'2EBF53DA-4B6C-2169-13A3-78AA9714DA20' => array(
 					'name' => 'Velocity',
 					'striker' => true,
 					'cards' => array(
-						'Velocity_CardFront.jpg',
-						'Velocity_CardBack.jpg'
+						'Velocity-1.jpg',
+						'Velocity-2.jpg'
 					)
 				),
 				'29E868AE-78CB-301B-D29C-122F1BF262B7' => array(
 					'name' => 'Salvo',
 					'winger' => true,
 					'cards' => array(
-						'Salvo_CardFront.jpg',
-						'Salvo_CardBack.jpg'
+						'Salvo-1.jpg',
+						'Salvo-2.jpg'
 					)
 				),
 				'D9C29085-FAC1-8A6E-7040-0920B4EF9A1A' => array(
 					'name' => 'Colossus',
 					'central_midfielder' => true,
 					'cards' => array(
-						'Colossus_CardFront.jpg',
-						'Colossus_CardBack.jpg'
+						'Colossus-1.jpg',
+						'Colossus-2.jpg'
 					)
 				),
 				'D45B4126-8223-AA48-7ABF-F0037E3BC22A' => array(
 					'name' => 'Ratchet',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Ratchet_CardFront.jpg',
-						'Ratchet_CardBack.jpg'
+						'Ratchet-1.jpg',
+						'Ratchet-2.jpg'
 					)
 				)
 			)
@@ -243,12 +305,21 @@ $data = array(
 			'name' => 'Fishermen',
 			'image' => 'Fishermen.png',
 			'players' => array(
+				'B93F86FA-7C5C-F1FE-22B3-751142949CC0' => array(
+					'name' => 'Corsair',
+					'captain' => true,
+					'defensive_midfielder' => true,
+					'cards' => array(
+						'Corsair-1.jpg',
+						'Corsair-2.jpg'
+					)
+				),
 				'6A365CA6-E974-8988-ABEC-E996511F05A9' => array(
 					'name' => 'Sakana',
 					'striker' => true,
 					'cards' => array(
-						'Sakana_CardFront.jpg',
-						'Sakana_CardBack.jpg'
+						'Sakana-1.jpg',
+						'Sakana-2.jpg'
 					)
 				),
 				'FEF4B740-D8AF-15ED-6CD1-CF9B2B92482A' => array(
@@ -256,56 +327,56 @@ $data = array(
 					'captain' => true,
 					'striker' => true,
 					'cards' => array(
-						'Shark_CardFront.jpg',
-						'Shark_CardBack.jpg'
+						'Shark-1.jpg',
+						'Shark-2.jpg'
 					)
 				),
 				'10895DAD-4B66-FA81-5147-B51A5BFC8131' => array(
 					'name' => 'Salt',
 					'mascot' => true,
 					'cards' => array(
-						'Salt_CardFront.jpg',
-						'Salt_CardBack.jpg'
+						'Salt-1.jpg',
+						'Salt-2.jpg'
 					)
 				),
 				'DEE6A270-3A18-3291-1164-B132B70BABFB' => array(
 					'name' => 'Siren',
 					'winger' => true,
 					'cards' => array(
-						'Siren_CardFront.jpg',
-						'Siren_CardBack.jpg'
+						'Siren-1.jpg',
+						'Siren-2.jpg'
 					)
 				),
 				'3CB2D6CC-21F2-3D82-7FB8-778B7C2314B1' => array(
 					'name' => 'Angel',
 					'striker' => true,
 					'cards' => array(
-						'Angel_CardFront.jpg',
-						'Angel_CardBack.jpg'
+						'Angel-1.jpg',
+						'Angel-2.jpg'
 					)
 				),
 				'4BF2B53A-AD47-40F2-CB8F-FA5DFC98D937' => array(
 					'name' => 'Greyscales',
 					'winger' => true,
 					'cards' => array(
-						'Greyscales_CardFront.jpg',
-						'Greyscales_CardBack.jpg'
+						'Greyscales-1.jpg',
+						'Greyscales-2.jpg'
 					)
 				),
 				'7AE973C0-4192-9578-A08B-3692C8DB219B' => array(
 					'name' => 'Jac',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Jac_CardFront.jpg',
-						'Jac_CardBack.jpg'
+						'Jac-1.jpg',
+						'Jac-2.jpg'
 					)
 				),
 				'CC888189-90FD-C95A-095E-0165347C940A' => array(
 					'name' => 'Kraken',
 					'centre_back' => true,
 					'cards' => array(
-						'Kraken_CardFront.jpg',
-						'Kraken_CardBack.jpg'
+						'Kraken-1.jpg',
+						'Kraken-2.jpg'
 					)
 				)
 			)
@@ -314,61 +385,69 @@ $data = array(
 			'name' => 'Masons',
 			'image' => 'Masons.png',
 			'players' => array(
+				'3C511CF8-7F12-1B8B-127F-9869558AF7E1' => array(
+					'name' => 'Chisel',
+					'attacking_midfielder' => true,
+					'cards' => array(
+						'Chisel-1.jpg',
+						'Chisel-2.jpg'
+					)
+				),
 				'B7A5A069-7669-6889-C313-4D8767548D80' => array(
 					'name' => 'Honour',
 					'captain' => true,
 					'central_midfielder' => true,
 					'cards' => array(
-						'Honour_CardFront.jpg',
-						'Honour_CardBack.jpg'
+						'Honour-1.jpg',
+						'Honour-2.jpg'
 					)
 				),
 				'5FD3D2E5-8004-21A3-B02D-1D1B036F303C' => array(
 					'name' => 'Marbles',
 					'mascot' => true,
 					'cards' => array(
-						'Marbles_CardFront.jpg',
-						'Marbles_CardBack.jpg'
+						'Marbles-1.jpg',
+						'Marbles-2.jpg'
 					)
 				),
 				'CA88360F-8190-C76A-D1DB-AAA92EA22755' => array(
 					'name' => 'Harmony',
 					'winger' => true,
 					'cards' => array(
-						'Harmony_CardFront.jpg',
-						'Harmony_CardBack.jpg'
+						'Harmony-1.jpg',
+						'Harmony-2.jpg'
 					)
 				),
 				'BE95D350-0663-ABBE-5C29-57A6AA2F8C41' => array(
 					'name' => 'Mallet',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Mallet_CardFront.jpg',
-						'Mallet_CardBack.jpg'
+						'Mallet-1.jpg',
+						'Mallet-2.jpg'
 					)
 				),
 				'9FA328FB-C338-B4E4-E71B-A766415E6882' => array(
 					'name' => 'Brick',
 					'centre_back' => true,
 					'cards' => array(
-						'Brick_CardFront.jpg',
-						'Brick_CardBack.jpg'
+						'Brick-1.jpg',
+						'Brick-2.jpg'
 					)
 				),
 				'24C89432-4F9C-6574-DE78-EC352D022713' => array(
 					'name' => 'Flint',
 					'striker' => true,
 					'cards' => array(
-						'Flint_CardFront.jpg',
-						'Flint_CardBack.jpg'
+						'Flint-1.jpg',
+						'Flint-2.jpg'
 					)
 				),
 				'23CCD466-7039-2CC5-044B-49C72B1BB60E' => array(
 					'name' => 'Tower',
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Tower_CardFront.jpg',
-						'Tower_CardBack.jpg'
+						'Tower-1.jpg',
+						'Tower-2.jpg'
 					)
 				)
 			)
@@ -377,61 +456,69 @@ $data = array(
 			'name' => 'Morticians',
 			'image' => 'Morticians.png',
 			'players' => array(
+				'9B0FF697-5391-30A2-C274-33FE0036EF4A' => array(
+					'name' => 'Bonesaw',
+					'striker' => true,
+					'cards' => array(
+						'Bonesaw-1.jpg',
+						'Bonesaw-2.jpg'
+					)
+				),
 				'9139C52E-0002-6509-16B8-5D849D20639E' => array(
 					'name' => 'Obulus',
 					'captain' => true,
 					'defensive_midfielder' => true,
 					'cards' => array(
-						'Obulus_CardFront.jpg',
-						'Obulus_CardBack.jpg'
+						'Obulus-1.jpg',
+						'Obulus-2.jpg'
 					)
 				),
 				'21B1A829-B239-7F39-1A1E-D17C683CC7AE' => array(
 					'name' => 'Dirge',
 					'mascot' => true,
 					'cards' => array(
-						'Dirge_CardFront.jpg',
-						'Dirge_CardBack.jpg'
+						'Dirge-1.jpg',
+						'Dirge-2.jpg'
 					)
 				),
 				'1DC55E9F-A36A-B536-7E07-A2306CB78878' => array(
 					'name' => 'Cosset',
 					'winger' => true,
 					'cards' => array(
-						'Cosset_CardFront.jpg',
-						'Cosset_CardBack.jpg'
+						'Cosset-1.jpg',
+						'Cosset-2.jpg'
 					)
 				),
 				'ED16D12B-0940-1887-1B0A-B0D294007295' => array(
 					'name' => 'Graves',
 					'winger' => true,
 					'cards' => array(
-						'Graves_CardFront.jpg',
-						'Graves_CardBack.jpg'
+						'Graves-1.jpg',
+						'Graves-2.jpg'
 					)
 				),
 				'BD1E3B62-17C3-4854-6BF0-CD70CFC472DB' => array(
 					'name' => 'Ghast',
 					'centre_back' => true,
 					'cards' => array(
-						'Ghast_CardFront.jpg',
-						'Ghast_CardBack.jpg'
+						'Ghast-1.jpg',
+						'Ghast-2.jpg'
 					)
 				),
 				'87480FE5-21C1-7B1B-5B17-16E2E7E2EF7F' => array(
 					'name' => 'Casket',
 					'centre_back' => true,
 					'cards' => array(
-						'Casket_CardFront.jpg',
-						'Casket_CardBack.jpg'
+						'Casket-1.jpg',
+						'Casket-2.jpg'
 					)
 				),
 				'742A95AD-8EB4-4AEB-DD4B-17917AC70281' => array(
 					'name' => 'Silence',
 					'central_midfielder' => true,
 					'cards' => array(
-						'Silence_CardFront.jpg',
-						'Silence_CardBack.jpg'
+						'Silence-1.jpg',
+						'Silence-2.jpg'
 					)
 				)
 			)
@@ -451,8 +538,8 @@ $data = array(
 						'C4EB7FDC-22CC-3A38-5966-4BD3BC160D83'
 					),
 					'cards' => array(
-						'Harry_CardFront.jpg',
-						'Harry_CardBack.jpg'
+						'Harry-1.jpg',
+						'Harry-2.jpg'
 					)
 				),
 				'10EAEEBC-E1F9-4554-8C7C-D15E4234A084' => array(
@@ -460,16 +547,16 @@ $data = array(
 					'captain' => true,
 					'central_midfielder' => true,
 					'cards' => array(
-						'Blackheart_CardFront.jpg',
-						'Blackheart_CardBack.jpg'
+						'Blackheart-1.jpg',
+						'Blackheart-2.jpg'
 					)
 				),
 				'35A7ABF7-9FD3-7D30-57D5-98A32A33E162' => array(
 					'name' => 'Coin',
 					'mascot' => true,
 					'cards' => array(
-						'Coin_CardFront.jpg',
-						'Coin_CardBack.jpg'
+						'Coin-1.jpg',
+						'Coin-2.jpg'
 					)
 				),
 				'B2F85CE6-C04A-B02D-2047-1EFC8CA41E5F' => array(
@@ -486,10 +573,10 @@ $data = array(
 						'4650825F-D4CD-270A-4E6F-CEC7143D28A8'
 					),
 					'cards' => array(
-						'Avarisse_CardFront.jpg',
-						'Avarisse_CardBack.jpg',
-						'Greede_CardFront.jpg',
-						'Greede_CardBack.jpg'
+						'Avarisse-1.jpg',
+						'Avarisse-2.jpg',
+						'Greede-1.jpg',
+						'Greede-2.jpg'
 					)
 				),
 				'48D31E25-D68A-A54B-63BD-25FFF1A74993' => array(
@@ -502,8 +589,8 @@ $data = array(
 						'CBCC03EA-FB04-2280-6DC6-0FDB507C03D0'
 					),
 					'cards' => array(
-						'Decimate_CardFront.jpg',
-						'Decimate_CardBack.jpg'
+						'Decimate-1.jpg',
+						'Decimate-2.jpg'
 					)
 				),
 				'5B901A2B-7BB7-6614-880D-4C8EEC93F7D0' => array(
@@ -515,8 +602,8 @@ $data = array(
 						'4650825F-D4CD-270A-4E6F-CEC7143D28A8'
 					),
 					'cards' => array(
-						'Fangtooth_CardFront.jpg',
-						'Fangtooth_CardBack.jpg'
+						'Fangtooth-1.jpg',
+						'Fangtooth-2.jpg'
 					)
 				),
 				'20EA0D8C-306B-31E5-FA6A-247DB76E32C2' => array(
@@ -529,8 +616,8 @@ $data = array(
 						'07266150-5AE7-1AB2-EC0F-C7D8849A68B7'
 					),
 					'cards' => array(
-						'Gutter_CardFront.jpg',
-						'Gutter_CardBack.jpg'
+						'Gutter-1.jpg',
+						'Gutter-2.jpg'
 					)
 				),
 				'5BCBD075-A038-F10C-3F47-4225EB98673A' => array(
@@ -542,8 +629,8 @@ $data = array(
 						'07266150-5AE7-1AB2-EC0F-C7D8849A68B7'
 					),
 					'cards' => array(
-						'Hemlocke_CardFront.jpg',
-						'Hemlocke_CardBack.jpg'
+						'Hemlocke-1.jpg',
+						'Hemlocke-2.jpg'
 					)
 				),
 				'669262DF-6410-E6AA-CBB4-68273D6B1070' => array(
@@ -555,12 +642,12 @@ $data = array(
 						'4650825F-D4CD-270A-4E6F-CEC7143D28A8'
 					),
 					'cards' => array(
-						'Mist_CardFront.jpg',
-						'Mist_CardBack.jpg'
+						'Mist-1.jpg',
+						'Mist-2.jpg'
 					)
 				),
 				'E9E25392-480E-DE11-E6CB-5719832E2178' => array(
-					'name' => 'Rage',
+					'name' => 'Rage (S1)',
 					'attacking_midfielder' => true,
 					'also_available_to' => array(
 						'44558F89-EA8B-4CCC-0F1F-F7C1EAC8838D',
@@ -569,8 +656,17 @@ $data = array(
 						'4650825F-D4CD-270A-4E6F-CEC7143D28A8'
 					),
 					'cards' => array(
-						'Rage_CardFront.jpg',
-						'Rage_CardBack.jpg'
+						'Rage-s1-1.jpg',
+						'Rage-s1-2.jpg'
+					)
+				),
+				'FF8623B1-3E92-AA95-1C94-7BB043943130' => array(
+					'name' => 'Rage (S2)',
+					'attacking_midfielder' => true,
+					'captain' => true,
+					'cards' => array(
+						'Rage-s2-1.jpg',
+						'Rage-s2-2.jpg'
 					)
 				),
 				'B4B3FF50-AD05-10D2-E61D-83FD6829F699' => array(
@@ -582,8 +678,8 @@ $data = array(
 						'CBCC03EA-FB04-2280-6DC6-0FDB507C03D0'
 					),
 					'cards' => array(
-						'Snakeskin_CardFront.jpg',
-						'Snakeskin_CardBack.jpg'
+						'Snakeskin-1.jpg',
+						'Snakeskin-2.jpg'
 					)
 				),
 				'6560F172-8D3E-4A72-BCF0-B365876DC669' => array(
@@ -595,8 +691,8 @@ $data = array(
 						'4650825F-D4CD-270A-4E6F-CEC7143D28A8'
 					),
 					'cards' => array(
-						'Minx_CardFront.jpg',
-						'Minx_CardBack.jpg'
+						'Minx-1.jpg',
+						'Minx-2.jpg'
 					)
 				)
 			)
