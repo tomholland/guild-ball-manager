@@ -750,13 +750,25 @@ $data = array(
 	),
 	'guides' => array(
 		'EB6C4BD2-9039-2D4B-4581-82E3C85816D5' => array(
-			'name' => 'Rulebook (Season 1)',
+			'name' => 'Rulebook',
 			'filename' => 'GuildBall_Season01.pdf'
 		),
 		'93656EA7-EAC7-15E5-815D-D551A5BC6164' => array(
 			'name' => 'Quick Start Rules',
-			'filename' => 'GuildBall-QuickStart.pdf'
+			'filename' => 'Quick_Start_Rules.pdf'
 		),
+		'5ABF4EB5-9E6C-A490-5129-F9605F1A0BBC' => array(
+			'name' => 'Errata (18/02/2016)',
+			'filename' => 'Errata.pdf'
+		),
+		'D745D699-A0F9-440E-7764-CD39D0F337D2' => array(
+			'name' => 'Figo Cup League (Jan 2016)',
+			'filename' => 'Figo_Cup_League_Rules.pdf'
+		),
+		'4E058927-5CEA-418F-3231-2B123E0A793C' => array(
+			'name' => 'Organised Play (04/11/2015)',
+			'filename' => 'Organised_Play.pdf'
+		)
 	),
 	'settings' => array(
 		'htmlemailsetting' => array(
